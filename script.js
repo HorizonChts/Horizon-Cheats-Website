@@ -1,449 +1,327 @@
+// Horizon Website - Main JavaScript
+
 // Cursor Glow Effect
-const cursorGlow = document.getElementById('cursorGlow');
-let mouseX = 0;
-let mouseY = 0;
-let glowX = 0;
-let glowY = 0;
-let isMouseMoving = false;
-let mouseTimeout;
+function initCursorGlow() {
+    const cursorGlow = document.getElementById('cursorGlow');
+    if (!cursorGlow || window.matchMedia('(pointer: coarse)').matches) return;
 
-// Smooth cursor following with requestAnimationFrame - Reduced delay
-function animateCursor() {
-    const dx = mouseX - glowX;
-    const dy = mouseY - glowY;
-    
-    glowX += dx * 0.3; // Increased from 0.1 to 0.3 for faster response
-    glowY += dy * 0.3; // Increased from 0.1 to 0.3 for faster response
-    
-    cursorGlow.style.left = glowX + 'px';
-    cursorGlow.style.top = glowY + 'px';
-    
-    requestAnimationFrame(animateCursor);
-}
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let isActive = false;
+    let rafId = null;
 
-// Track mouse movement
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    isMouseMoving = true;
-    cursorGlow.style.opacity = '0.4'; // Increased opacity for better visibility
-    
-    clearTimeout(mouseTimeout);
-    mouseTimeout = setTimeout(() => {
-        isMouseMoving = false;
-        cursorGlow.style.opacity = '0.15'; // Reduced fade-out opacity
-    }, 200); // Reduced from 100ms to 200ms for faster fade
-});
-
-// Initialize cursor animation
-animateCursor();
-
-// Hide cursor glow on mobile devices
-if (window.innerWidth <= 768) {
-    cursorGlow.style.display = 'none';
-}
-
-// Mobile Navigation Toggle
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        if (!isActive) {
+            isActive = true;
+            animate();
+        }
     });
-});
 
-// Smooth Scrolling for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+    document.addEventListener('mouseleave', () => {
+        isActive = false;
+        if (rafId) cancelAnimationFrame(rafId);
+    });
+
+    function animate() {
+        if (!isActive) return;
+
+        currentX += (mouseX - currentX) * 0.1;
+        currentY += (mouseY - currentY) * 0.1;
+
+        cursorGlow.style.left = currentX + 'px';
+        cursorGlow.style.top = currentY + 'px';
+
+        rafId = requestAnimationFrame(animate);
+    }
+}
+
+// Navbar Scroll Effect
+function initNavbar() {
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    // Scroll effect
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Mobile menu toggle
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navMenu.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
             });
-        }
-    });
-});
+        });
+    }
 
-// Active Navigation Link on Scroll
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-link');
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
 
-window.addEventListener('scroll', () => {
-    let current = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Intersection Observer for Scroll Animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
-document.querySelectorAll('.feature-card, .download-card, .reseller-info, .reseller-form').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-});
-
-// Parallax Effect for Hero Background
-const heroBg = document.querySelector('.hero-bg');
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallax = scrolled * 0.5;
-    heroBg.style.transform = `translateY(${parallax}px)`;
-});
-
-// Dynamic Glow Effect on Hover
-document.querySelectorAll('.hover-glow, .btn').forEach(element => {
-    element.addEventListener('mouseenter', (e) => {
-        const rect = element.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+    window.addEventListener('scroll', () => {
+        let current = '';
         
-        element.style.setProperty('--mouse-x', `${x}px`);
-        element.style.setProperty('--mouse-y', `${y}px`);
-    });
-    
-    element.addEventListener('mousemove', (e) => {
-        const rect = element.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        element.style.setProperty('--mouse-x', `${x}px`);
-        element.style.setProperty('--mouse-y', `${y}px`);
-    });
-});
-
-// GitHub API Integration (Mock)
-async function fetchGitHubData() {
-    try {
-        // In a real implementation, this would fetch from GitHub API
-        // const response = await fetch('https://api.github.com/repos/horizon-cheats/horizon-cheats');
-        // const data = await response.json();
-        
-        // Mock data for demonstration
-        const mockData = {
-            stargazers_count: 1234,
-            forks_count: 567,
-            open_issues_count: 23,
-            updated_at: '2024-01-15T10:30:00Z'
-        };
-        
-        // Update GitHub stats if elements exist
-        document.querySelectorAll('.github-stats').forEach(el => {
-            if (el.dataset.stat === 'stars') {
-                el.textContent = mockData.stargazers_count.toLocaleString();
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= sectionTop - 200) {
+                current = section.getAttribute('id');
             }
         });
-        
-    } catch (error) {
-        console.log('GitHub API not available, using mock data');
-    }
-}
 
-// Initialize GitHub data on load
-fetchGitHubData();
-
-// Shop Purchase Handlers
-document.querySelectorAll('.shop-card .btn-primary').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const card = this.closest('.shop-card');
-        const productName = card.querySelector('h3').textContent;
-        const price = card.querySelector('.price-tag').textContent;
-        
-        // Show purchase state
-        const originalText = this.innerHTML;
-        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        this.disabled = true;
-        
-        // Simulate purchase processing
-        setTimeout(() => {
-            this.innerHTML = '<i class="fas fa-check"></i> Purchase Successful!';
-            this.style.background = 'var(--success)';
-            
-            // Show success notification
-            showNotification(`Successfully purchased ${productName} for ${price}!`, 'success');
-            
-            // Reset button after delay
-            setTimeout(() => {
-                this.innerHTML = originalText;
-                this.style.background = '';
-                this.disabled = false;
-            }, 3000);
-        }, 2000);
-    });
-});
-
-// Notification System
-function showNotification(message, type = 'info') {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
-        <span>${message}</span>
-        <button class="notification-close"><i class="fas fa-times"></i></button>
-    `;
-    
-    // Add styles
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? 'var(--success)' : 'var(--glow-color)'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        z-index: 10000;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        max-width: 400px;
-        animation: slideInRight 0.3s ease;
-    `;
-    
-    // Add to page
-    document.body.appendChild(notification);
-    
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 5000);
-    
-    // Close button handler
-    notification.querySelector('.notification-close').addEventListener('click', () => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    });
-}
-
-// Add notification animations
-const notificationStyles = document.createElement('style');
-notificationStyles.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-    
-    .notification-close {
-        background: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-        padding: 0;
-        margin-left: auto;
-    }
-    
-    .notification-close:hover {
-        opacity: 0.8;
-    }
-`;
-document.head.appendChild(notificationStyles);
-
-// Download Button Handlers
-document.querySelectorAll('.download-card .btn-primary').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const card = this.closest('.download-card');
-        const productName = card.querySelector('h3').textContent;
-        
-        // Show download state
-        const originalText = this.innerHTML;
-        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
-        this.disabled = true;
-        
-        // Simulate download
-        setTimeout(() => {
-            this.innerHTML = '<i class="fas fa-check"></i> Download Started!';
-            this.style.background = 'var(--success)';
-            
-            // Reset after delay
-            setTimeout(() => {
-                this.innerHTML = originalText;
-                this.style.background = '';
-                this.disabled = false;
-            }, 3000);
-        }, 1500);
-    });
-});
-
-// GitHub API Integration (Mock)
-async function fetchGitHubData() {
-    try {
-        // In a real implementation, this would fetch from GitHub API
-        // const response = await fetch('https://api.github.com/repos/horizon-cheats/horizon-cheats');
-        // const data = await response.json();
-        
-        // Mock data for demonstration
-        const mockData = {
-            stargazers_count: 1234,
-            forks_count: 567,
-            open_issues_count: 23,
-            updated_at: '2024-01-15T10:30:00Z'
-        };
-        
-        // Update GitHub stats if elements exist
-        document.querySelectorAll('.github-stats').forEach(el => {
-            if (el.dataset.stat === 'stars') {
-                el.textContent = mockData.stargazers_count.toLocaleString();
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
             }
         });
-        
-    } catch (error) {
-        console.log('GitHub API not available, using mock data');
-    }
+    });
 }
 
-// Initialize GitHub data on load
-fetchGitHubData();
-
-// Typing Effect for Hero Title
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.textContent = '';
+// Animated Counter
+function initAnimatedCounters() {
+    const counters = document.querySelectorAll('.stat-number');
     
-    function type() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    
-    type();
-}
-
-// Initialize typing effect when page loads
-window.addEventListener('load', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.textContent;
-        setTimeout(() => {
-            typeWriter(heroTitle, originalText, 50);
-        }, 500);
-    }
-});
-
-// Scroll Progress Indicator
-function updateScrollProgress() {
-    const scrollTop = document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrollPercent = (scrollTop / scrollHeight) * 100;
-    
-    // Create progress bar if it doesn't exist
-    let progressBar = document.querySelector('.scroll-progress');
-    if (!progressBar) {
-        progressBar = document.createElement('div');
-        progressBar.className = 'scroll-progress';
-        progressBar.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--glow-color), var(--cyan));
-            z-index: 10000;
-            transition: width 0.3s ease;
-        `;
-        document.body.appendChild(progressBar);
-    }
-    
-    progressBar.style.width = scrollPercent + '%';
-}
-
-window.addEventListener('scroll', updateScrollProgress);
-
-// Performance optimization - Debounce scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px'
     };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+
+                updateCounter();
+                observer.unobserve(counter);
+            }
+        });
+    }, observerOptions);
+
+    counters.forEach(counter => observer.observe(counter));
 }
 
-// Debounced scroll handlers
-const debouncedScroll = debounce(() => {
-    updateScrollProgress();
-}, 10);
+// Testimonials Carousel
+function initTestimonials() {
+    const carousel = document.getElementById('testimonialsCarousel');
+    if (!carousel) return;
 
-window.addEventListener('scroll', debouncedScroll);
+    const cards = carousel.querySelectorAll('.testimonial-card');
+    const dots = carousel.querySelectorAll('.dot');
+    const prevBtn = document.getElementById('prevTestimonial');
+    const nextBtn = document.getElementById('nextTestimonial');
+    
+    let currentIndex = 0;
+    let autoPlayInterval;
 
-// Add CSS for scroll progress bar
-const style = document.createElement('style');
-style.textContent = `
-    .scroll-progress {
-        box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+    function showTestimonial(index) {
+        cards.forEach((card, i) => {
+            card.classList.remove('active');
+            dots[i].classList.remove('active');
+        });
+
+        cards[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentIndex = index;
     }
-`;
-document.head.appendChild(style);
 
-// Console Easter Egg
-console.log('%c🚀 Horizon Cheats Website', 'font-size: 20px; color: #60a5fa; font-weight: bold;');
-console.log('%cBuilt with dark blue theme, cursor glow effects, and GitHub integration', 'color: #94a3b8;');
-console.log('%cCheck out our GitHub repository for the source code!', 'color: #06b6d4;');
+    function nextTestimonial() {
+        const next = (currentIndex + 1) % cards.length;
+        showTestimonial(next);
+    }
+
+    function prevTestimonial() {
+        const prev = (currentIndex - 1 + cards.length) % cards.length;
+        showTestimonial(prev);
+    }
+
+    // Event listeners
+    if (nextBtn) nextBtn.addEventListener('click', nextTestimonial);
+    if (prevBtn) prevBtn.addEventListener('click', prevTestimonial);
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showTestimonial(index));
+    });
+
+    // Auto-play
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(nextTestimonial, 5000);
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+
+    carousel.addEventListener('mouseenter', stopAutoPlay);
+    carousel.addEventListener('mouseleave', startAutoPlay);
+
+    startAutoPlay();
+}
+
+// FAQ Accordion
+function initFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+
+            // Close all other items
+            faqItems.forEach(otherItem => {
+                otherItem.classList.remove('active');
+            });
+
+            // Toggle current item
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+}
+
+// Scroll Reveal Animation
+function initScrollReveal() {
+    const revealElements = document.querySelectorAll(
+        '.section-header, .feature-card, .product-card, .download-card, ' +
+        '.timeline-item, .testimonial-card, .faq-item, .contact-card'
+    );
+
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('active');
+                }, index * 100);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    revealElements.forEach(el => {
+        el.classList.add('reveal');
+        observer.observe(el);
+    });
+}
+
+// Smooth Scroll for Anchor Links
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offsetTop = target.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// Button Click Handlers
+function initButtonHandlers() {
+    // Buy buttons
+    document.querySelectorAll('.product-card .btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Redirecting to checkout... (Demo)');
+        });
+    });
+
+    // Download buttons
+    document.querySelectorAll('.btn-download').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Starting download... (Demo)');
+        });
+    });
+
+    // Discord buttons
+    document.querySelectorAll('.btn-discord, a[href="#discord"]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            if (btn.getAttribute('href') === '#') {
+                e.preventDefault();
+                alert('Joining Discord... (Demo)');
+            }
+        });
+    });
+
+    // Footer links that are placeholders
+    document.querySelectorAll('.footer-column a[href="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Coming soon!');
+        });
+    });
+}
+
+// Performance: Pause animations when tab is hidden
+function initVisibilityHandler() {
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            document.body.classList.add('paused');
+        } else {
+            document.body.classList.remove('paused');
+        }
+    });
+}
+
+// Initialize Everything
+function init() {
+    initCursorGlow();
+    initNavbar();
+    initAnimatedCounters();
+    initTestimonials();
+    initFAQ();
+    initScrollReveal();
+    initSmoothScroll();
+    initButtonHandlers();
+    initVisibilityHandler();
+}
+
+// Run when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}

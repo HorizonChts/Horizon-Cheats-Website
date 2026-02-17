@@ -1,6 +1,69 @@
 /* ===================================
-   Horizon Website - Main Stylesheet
+   Performance Optimizations
    =================================== */
+
+/* GPU Acceleration for animated elements */
+.cursor-glow,
+.gradient-orb,
+.feature-card,
+.pricing-card,
+.download-card,
+.testimonial-card,
+.faq-item,
+.changelog-item,
+.btn {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Containment for sections to limit repaint */
+.hero,
+.features,
+.shop,
+.download,
+.testimonials,
+.faq,
+.changelog {
+    contain: layout style paint;
+}
+
+/* Reduce paint areas */
+.section-header,
+.status-badge,
+.nav-link {
+    contain: layout;
+}
+
+/* Optimize transitions - only transform and opacity */
+.feature-card,
+.pricing-card,
+.download-card,
+.testimonial-card,
+.faq-item,
+.changelog-content {
+    transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Disable complex animations on reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .cursor-glow {
+        display: none !important;
+    }
+    
+    .gradient-orb {
+        animation: none !important;
+    }
+}
 
 /* CSS Variables */
 :root {
@@ -905,7 +968,7 @@ body:hover .cursor-glow {
 }
 
 /* ===================================
-   FAQ Section
+   FAQ Section - Optimized Animations
    =================================== */
 .faq {
     padding: 100px 0;
@@ -925,16 +988,17 @@ body:hover .cursor-glow {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     overflow: hidden;
-    transition: var(--transition-base);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .faq-item:hover {
     border-color: var(--accent-primary);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
 }
 
 .faq-item.active {
     border-color: var(--accent-primary);
-    box-shadow: var(--shadow-glow);
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.25);
 }
 
 .faq-question {
@@ -951,12 +1015,20 @@ body:hover .cursor-glow {
     font-weight: 600;
     text-align: left;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+    color: var(--accent-primary);
+}
+
+.faq-item.active .faq-question {
+    color: var(--accent-primary);
 }
 
 .faq-icon {
     flex-shrink: 0;
-    transition: var(--transition-fast);
+    transition: transform 0.3s ease;
     color: var(--accent-primary);
 }
 
@@ -967,17 +1039,25 @@ body:hover .cursor-glow {
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    transition: max-height 0.4s ease-out;
 }
 
 .faq-answer p {
     padding: 0 24px 24px;
     color: var(--text-secondary);
     line-height: 1.7;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+
+.faq-item.active .faq-answer p {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .faq-item.active .faq-answer {
-    max-height: 200px;
+    max-height: 300px;
 }
 
 /* ===================================
@@ -1410,14 +1490,242 @@ body:hover .cursor-glow {
     }
 }
 
-/* Intersection Observer Animations */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+/* ===================================
+   Optimized Animations & Effects
+   =================================== */
+
+/* Button hover - simple glow */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-.reveal.active {
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Feature Card - simple hover lift */
+.feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+}
+
+.feature-icon {
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1);
+}
+
+/* Pricing Card - simple hover */
+.pricing-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-8px);
+}
+
+.pricing-card.popular {
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+    }
+}
+
+/* Download Card - simple hover */
+.download-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.download-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+}
+
+.download-icon {
+    transition: transform 0.3s ease;
+}
+
+.download-card:hover .download-icon {
+    transform: scale(1.1);
+}
+
+/* Testimonial Card - simple hover */
+.testimonial-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+}
+
+/* Showcase Item */
+.showcase-item {
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.showcase-item:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-primary);
+}
+
+/* Changelog - simple hover */
+.changelog-item {
+    transition: transform 0.3s ease;
+}
+
+.changelog-item:hover {
+    transform: translateX(8px);
+}
+
+.changelog-marker {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.changelog-item:hover .changelog-marker {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+.changelog-content {
+    transition: border-color 0.3s ease;
+}
+
+.changelog-content:hover {
+    border-color: var(--accent-primary);
+}
+
+/* Discord Card */
+.discord-icon {
+    animation: discordFloat 3s ease-in-out infinite;
+}
+
+@keyframes discordFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Navbar Link */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent-gradient);
+    transition: width 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Status Badge */
+.status-badge {
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(59, 130, 246, 0);
+    }
+}
+
+/* Hero Stats */
+.stat-item {
+    transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.stat-item:hover .stat-number {
+    transform: scale(1.1);
+}
+
+/* Scroll Reveal */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-up.active {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Loading Skeleton */
+.skeleton {
+    background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+    background-size: 200% 100%;
+    animation: skeletonLoading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonLoading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus States */
+*:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

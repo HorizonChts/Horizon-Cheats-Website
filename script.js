@@ -3,6 +3,9 @@
 // ===================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Add animation styles first
+    addAnimationStyles();
+    
     // Initialize all components
     initCursorGlow();
     initMobileMenu();
@@ -12,10 +15,19 @@ document.addEventListener('DOMContentLoaded', () => {
     initFAQAccordion();
     initRevealAnimations();
     initParallaxEffect();
+    
+    // Initialize new animation effects
+    initMagneticButtons();
+    
+    // Initialize text effects after a short delay
+    setTimeout(() => {
+        initTextScramble();
+        initTypingEffect();
+    }, 500);
 });
 
 // ===================================
-// Cursor Glow Effect
+// Cursor Glow Effect - Optimized
 // ===================================
 function initCursorGlow() {
     const cursorGlow = document.querySelector('.cursor-glow');
@@ -33,24 +45,46 @@ function initCursorGlow() {
     let glowY = 0;
     let isActive = false;
     let rafId = null;
+    let mouseTimeout = null;
 
+    // Throttle mousemove to 60fps max (16ms)
+    let lastMouseMove = 0;
     document.addEventListener('mousemove', (e) => {
+        const now = performance.now();
+        if (now - lastMouseMove < 16) return; // Skip if less than 16ms
+        lastMouseMove = now;
+        
         mouseX = e.clientX;
         mouseY = e.clientY;
         
         if (!isActive) {
             isActive = true;
+            cursorGlow.style.opacity = '1';
             animateGlow();
         }
-    });
+        
+        // Clear existing timeout
+        clearTimeout(mouseTimeout);
+        // Pause after 100ms of no movement
+        mouseTimeout = setTimeout(() => {
+            isActive = false;
+            cancelAnimationFrame(rafId);
+        }, 100);
+    }, { passive: true });
 
     function animateGlow() {
-        // Smooth follow with easing
-        glowX += (mouseX - glowX) * 0.15;
-        glowY += (mouseY - glowY) * 0.15;
-
-        cursorGlow.style.left = `${glowX}px`;
-        cursorGlow.style.top = `${glowY}px`;
+        if (!isActive) return;
+        
+        // Smooth follow with easing - only update if moved enough
+        const dx = mouseX - glowX;
+        const dy = mouseY - glowY;
+        
+        if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+            glowX += dx * 0.15;
+            glowY += dy * 0.15;
+            cursorGlow.style.left = `${glowX}px`;
+            cursorGlow.style.top = `${glowY}px`;
+        }
 
         rafId = requestAnimationFrame(animateGlow);
     }
@@ -58,14 +92,16 @@ function initCursorGlow() {
     // Pause when tab is hidden
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
-            cancelAnimationFrame(rafId);
             isActive = false;
+            cancelAnimationFrame(rafId);
         }
     });
 
     // Hide on mouse leave
     document.addEventListener('mouseleave', () => {
         cursorGlow.style.opacity = '0';
+        isActive = false;
+        cancelAnimationFrame(rafId);
     });
 
     document.addEventListener('mouseenter', () => {
@@ -255,7 +291,7 @@ function initCounterAnimation() {
 }
 
 // ===================================
-// FAQ Accordion
+// FAQ Accordion - Enhanced Version
 // ===================================
 function initFAQAccordion() {
     const faqItems = document.querySelectorAll('.faq-item');
@@ -263,29 +299,84 @@ function initFAQAccordion() {
 
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
         
         question.addEventListener('click', () => {
             const isActive = item.classList.contains('active');
             
-            // Close all items
+            // Close all items with smooth animation
             faqItems.forEach(otherItem => {
-                otherItem.classList.remove('active');
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    if (otherAnswer) {
+                        otherAnswer.style.maxHeight = null;
+                    }
+                }
             });
             
-            // Open clicked item if it wasn't active
+            // Toggle current item
             if (!isActive) {
                 item.classList.add('active');
+                // Set actual height for smooth transition
+                if (answer) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+                
+                // Add click ripple effect
+                createRipple(question);
+            } else {
+                item.classList.remove('active');
+                if (answer) {
+                    answer.style.maxHeight = null;
+                }
+            }
+        });
+        
+        // Remove hover effects that could cause lag
+        item.addEventListener('mouseenter', () => {
+            // Just highlight border, no transform
+            item.style.borderColor = 'var(--accent-primary)';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            if (!item.classList.contains('active')) {
+                item.style.borderColor = '';
             }
         });
     });
 }
 
+// Create ripple effect helper
+function createRipple(element) {
+    const ripple = document.createElement('span');
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    
+    ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: rippleEffect 0.6s ease-out forwards;
+    `;
+    
+    element.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+}
+
 // ===================================
-// Reveal Animations (Intersection Observer)
+// Reveal Animations - Enhanced (Intersection Observer)
 // ===================================
 function initRevealAnimations() {
+    // Support both old and new animation classes
     const revealElements = document.querySelectorAll(
-        '.feature-card, .pricing-card, .download-card, .testimonial-card, .showcase-item, .changelog-item'
+        '.feature-card, .pricing-card, .download-card, .testimonial-card, .showcase-item, .changelog-item, .faq-item'
     );
 
     if (!revealElements.length) return;
@@ -294,11 +385,13 @@ function initRevealAnimations() {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 // Add stagger delay based on element index
+                const delay = Math.min(index * 100, 600);
+                
                 setTimeout(() => {
-                    entry.target.classList.add('reveal');
                     entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 100);
+                    entry.target.style.transform = 'translateY(0) translateX(0) scale(1)';
+                    entry.target.classList.add('revealed');
+                }, delay);
                 
                 revealObserver.unobserve(entry.target);
             }
@@ -308,16 +401,43 @@ function initRevealAnimations() {
         rootMargin: '0px 0px -50px 0px'
     });
 
-    revealElements.forEach(el => {
+    revealElements.forEach((el, index) => {
+        // Set initial state
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        
+        // Alternate between left/right for visual interest
+        if (index % 2 === 0) {
+            el.style.transform = 'translateY(40px)';
+        } else {
+            el.style.transform = 'translateY(30px) translateX(10px)';
+        }
+        
+        el.style.transition = 'opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
         revealObserver.observe(el);
+    });
+
+    // Also handle section headers
+    const sectionHeaders = document.querySelectorAll('.section-header');
+    const headerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                headerObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    sectionHeaders.forEach(header => {
+        header.style.opacity = '0';
+        header.style.transform = 'translateY(30px)';
+        header.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        headerObserver.observe(header);
     });
 }
 
 // ===================================
-// Parallax Effect for Hero
+// Parallax Effect for Hero - Optimized
 // ===================================
 function initParallaxEffect() {
     const hero = document.querySelector('.hero');
@@ -329,10 +449,11 @@ function initParallaxEffect() {
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
     let ticking = false;
+    let rafId = null;
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
-            requestAnimationFrame(() => {
+            rafId = requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
                 const rate = scrolled * 0.3;
 
@@ -345,12 +466,155 @@ function initParallaxEffect() {
             });
             ticking = true;
         }
-    });
+    }, { passive: true });
 }
 
 // ===================================
 // Utility Functions
 // ===================================
+
+// Magnetic Button Effect - Optimized with throttling
+function initMagneticButtons() {
+    const buttons = document.querySelectorAll('.btn:not(.btn-discord)');
+    
+    // Skip on touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    
+    buttons.forEach(button => {
+        let rafId = null;
+        let isHovering = false;
+        
+        button.addEventListener('mousemove', (e) => {
+            if (!isHovering) return;
+            
+            // Cancel pending animation
+            if (rafId) cancelAnimationFrame(rafId);
+            
+            rafId = requestAnimationFrame(() => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                // Subtle magnetic pull (max 8px)
+                const maxMove = 8;
+                const moveX = (x / rect.width) * maxMove;
+                const moveY = (y / rect.height) * maxMove;
+                
+                button.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        }, { passive: true });
+        
+        button.addEventListener('mouseenter', () => {
+            isHovering = true;
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            isHovering = false;
+            if (rafId) cancelAnimationFrame(rafId);
+            button.style.transform = '';
+        });
+    });
+}
+
+// Text Scramble Effect for Headers
+function initTextScramble() {
+    const heroTitle = document.querySelector('.hero-title');
+    if (!heroTitle) return;
+    
+    const originalText = heroTitle.textContent;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    
+    let iteration = 0;
+    const interval = setInterval(() => {
+        heroTitle.textContent = originalText
+            .split('')
+            .map((char, index) => {
+                if (index < iteration) {
+                    return originalText[index];
+                }
+                if (char === ' ' || char === '\n') return char;
+                return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join('');
+        
+        if (iteration >= originalText.length) {
+            clearInterval(interval);
+        }
+        
+        iteration += 1/3;
+    }, 30);
+    
+    // Clear after animation completes
+    setTimeout(() => {
+        clearInterval(interval);
+        heroTitle.textContent = originalText;
+    }, 2000);
+}
+
+// Typing Effect for Status Badges
+function initTypingEffect() {
+    const badges = document.querySelectorAll('.status-badge span:not(.status-dot)');
+    
+    badges.forEach((badge, index) => {
+        const text = badge.textContent;
+        badge.textContent = '';
+        badge.style.opacity = '1';
+        
+        let i = 0;
+        const typeInterval = setInterval(() => {
+            if (i < text.length) {
+                badge.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(typeInterval);
+            }
+        }, 50 + (index * 20));
+    });
+}
+
+// Add ripple animation keyframes
+function addAnimationStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes rippleEffect {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes countUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .revealed {
+            animation: slideInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+    `;
+    document.head.appendChild(style);
+}
 
 // Debounce function for performance
 function debounce(func, wait) {
@@ -377,10 +641,14 @@ function throttle(func, limit) {
     };
 }
 
-// Add ripple effect to buttons
+// Add ripple effect to buttons - Optimized
 document.querySelectorAll('.btn').forEach(button => {
     button.addEventListener('click', function(e) {
+        // Skip if already has ripple
+        if (this.querySelector('.ripple')) return;
+        
         const ripple = document.createElement('span');
+        ripple.className = 'ripple';
         const rect = this.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
         const x = e.clientX - rect.left - size / 2;
@@ -395,7 +663,7 @@ document.querySelectorAll('.btn').forEach(button => {
             background: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             transform: scale(0);
-            animation: ripple 0.6s ease-out;
+            animation: ripple 0.6s ease-out forwards;
             pointer-events: none;
         `;
         

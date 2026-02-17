@@ -7,13 +7,13 @@ let glowY = 0;
 let isMouseMoving = false;
 let mouseTimeout;
 
-// Smooth cursor following with requestAnimationFrame
+// Smooth cursor following with requestAnimationFrame - Reduced delay
 function animateCursor() {
     const dx = mouseX - glowX;
     const dy = mouseY - glowY;
     
-    glowX += dx * 0.1;
-    glowY += dy * 0.1;
+    glowX += dx * 0.3; // Increased from 0.1 to 0.3 for faster response
+    glowY += dy * 0.3; // Increased from 0.1 to 0.3 for faster response
     
     cursorGlow.style.left = glowX + 'px';
     cursorGlow.style.top = glowY + 'px';
@@ -27,13 +27,13 @@ document.addEventListener('mousemove', (e) => {
     mouseY = e.clientY;
     
     isMouseMoving = true;
-    cursorGlow.style.opacity = '0.3';
+    cursorGlow.style.opacity = '0.4'; // Increased opacity for better visibility
     
     clearTimeout(mouseTimeout);
     mouseTimeout = setTimeout(() => {
         isMouseMoving = false;
-        cursorGlow.style.opacity = '0.1';
-    }, 100);
+        cursorGlow.style.opacity = '0.15'; // Reduced fade-out opacity
+    }, 200); // Reduced from 100ms to 200ms for faster fade
 });
 
 // Initialize cursor animation
@@ -150,40 +150,158 @@ document.querySelectorAll('.hover-glow, .btn').forEach(element => {
     });
 });
 
-// Form Submission Handler
-const applicationForm = document.querySelector('.application-form');
-if (applicationForm) {
-    applicationForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+// GitHub API Integration (Mock)
+async function fetchGitHubData() {
+    try {
+        // In a real implementation, this would fetch from GitHub API
+        // const response = await fetch('https://api.github.com/repos/horizon-cheats/horizon-cheats');
+        // const data = await response.json();
         
-        // Get form data
-        const formData = new FormData(applicationForm);
-        const data = Object.fromEntries(formData);
+        // Mock data for demonstration
+        const mockData = {
+            stargazers_count: 1234,
+            forks_count: 567,
+            open_issues_count: 23,
+            updated_at: '2024-01-15T10:30:00Z'
+        };
         
-        // Show loading state
-        const submitBtn = applicationForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-        submitBtn.disabled = true;
+        // Update GitHub stats if elements exist
+        document.querySelectorAll('.github-stats').forEach(el => {
+            if (el.dataset.stat === 'stars') {
+                el.textContent = mockData.stargazers_count.toLocaleString();
+            }
+        });
         
-        // Simulate API call
+    } catch (error) {
+        console.log('GitHub API not available, using mock data');
+    }
+}
+
+// Initialize GitHub data on load
+fetchGitHubData();
+
+// Shop Purchase Handlers
+document.querySelectorAll('.shop-card .btn-primary').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const card = this.closest('.shop-card');
+        const productName = card.querySelector('h3').textContent;
+        const price = card.querySelector('.price-tag').textContent;
+        
+        // Show purchase state
+        const originalText = this.innerHTML;
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        this.disabled = true;
+        
+        // Simulate purchase processing
         setTimeout(() => {
-            // Show success message
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> Application Submitted!';
-            submitBtn.style.background = 'var(--success)';
+            this.innerHTML = '<i class="fas fa-check"></i> Purchase Successful!';
+            this.style.background = 'var(--success)';
             
-            // Reset form
-            applicationForm.reset();
+            // Show success notification
+            showNotification(`Successfully purchased ${productName} for ${price}!`, 'success');
             
             // Reset button after delay
             setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.style.background = '';
-                submitBtn.disabled = false;
+                this.innerHTML = originalText;
+                this.style.background = '';
+                this.disabled = false;
             }, 3000);
         }, 2000);
     });
+});
+
+// Notification System
+function showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+        <button class="notification-close"><i class="fas fa-times"></i></button>
+    `;
+    
+    // Add styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? 'var(--success)' : 'var(--glow-color)'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        max-width: 400px;
+        animation: slideInRight 0.3s ease;
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 5000);
+    
+    // Close button handler
+    notification.querySelector('.notification-close').addEventListener('click', () => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    });
 }
+
+// Add notification animations
+const notificationStyles = document.createElement('style');
+notificationStyles.textContent = `
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+    
+    .notification-close {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 0;
+        margin-left: auto;
+    }
+    
+    .notification-close:hover {
+        opacity: 0.8;
+    }
+`;
+document.head.appendChild(notificationStyles);
 
 // Download Button Handlers
 document.querySelectorAll('.download-card .btn-primary').forEach(btn => {

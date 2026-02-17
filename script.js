@@ -144,7 +144,7 @@ function initFAQ() {
 
 // Reveal Animations
 function initRevealAnimations() {
-    const revealElements = document.querySelectorAll('.feature-card, .pricing-card, .download-card, .testimonial-card, .faq-item, .changelog-item');
+    const revealElements = document.querySelectorAll('.feature-card, .download-card, .faq-item, .changelog-item');
     if (revealElements.length === 0) return;
 
     const observer = new IntersectionObserver((entries) => {

@@ -11,15 +11,12 @@
 
 /* GPU Acceleration for animated elements */
 .cursor-glow,
-.hero-bg-effect,
 .feature-card,
 .download-card,
 .faq-item,
 .changelog-item,
-.btn,
 .discord-icon {
     will-change: transform;
-    transform: translateZ(0);
 }
 
 /* CSS Containment for sections */

@@ -457,30 +457,33 @@ body:hover .cursor-glow {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 32px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transform: translateY(0) scale(1);
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-.feature-card:hover {
-    transform: translateY(-8px);
+.feature-card:hover,
+.feature-card:focus-within {
     border-color: var(--accent-primary);
-    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 25px 50px rgba(59, 130, 246, 0.2);
+    animation: featureCardBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .feature-icon {
     width: 56px;
     height: 56px;
+    border-radius: 16px;
     background: rgba(59, 130, 246, 0.1);
-    border-radius: var(--radius-md);
-    display: flex;
+    color: var(--accent-primary);
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-primary);
     margin-bottom: 20px;
     transition: transform 0.3s ease;
 }
 
-.feature-card:hover .feature-icon {
-    transform: scale(1.1);
+.feature-card:hover .feature-icon,
+.feature-card:focus-within .feature-icon {
+    animation: featureIconPop 0.6s ease-in-out;
 }
 
 .feature-card h3 {
@@ -492,6 +495,39 @@ body:hover .cursor-glow {
 .feature-card p {
     color: var(--text-secondary);
     font-size: 0.95rem;
+}
+
+@keyframes featureCardBounce {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    45% {
+        transform: translateY(-18px) scale(1.04);
+    }
+    65% {
+        transform: translateY(-6px) scale(0.99);
+    }
+    80% {
+        transform: translateY(-14px) scale(1.02);
+    }
+    100% {
+        transform: translateY(-10px) scale(1.01);
+    }
+}
+
+@keyframes featureIconPop {
+    0% {
+        transform: scale(1);
+    }
+    45% {
+        transform: translateY(-6px) scale(1.15);
+    }
+    75% {
+        transform: translateY(2px) scale(0.95);
+    }
+    100% {
+        transform: translateY(0) scale(1.05);
+    }
 }
 
 /* ===================================
@@ -734,6 +770,17 @@ body:hover .cursor-glow {
     max-width: 800px;
     margin: 0 auto;
     position: relative;
+}
+
+.changelog-status {
+    text-align: center;
+    padding: 32px;
+    border: 1px dashed rgba(59, 130, 246, 0.4);
+    border-radius: var(--radius-lg);
+    color: var(--text-muted);
+    background: rgba(15, 23, 42, 0.4);
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
 }
 
 .changelog-list::before {

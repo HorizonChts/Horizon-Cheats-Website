@@ -240,6 +240,106 @@ function initActiveNavLink() {
     window.addEventListener('scroll', handleScroll, { passive: true });
 }
 
+// Github Changelog Feed
+async function initChangelogFeed() {
+    const statusEl = document.querySelector('[data-changelog-status]');
+    const changelogList = document.querySelector('.changelog-list');
+    if (!statusEl || !changelogList) return;
+
+    const endpoint = 'https://api.github.com/repos/HorizonChts/Horizon-Update-Logs/commits?per_page=5';
+    statusEl.textContent = 'Fetching latest updates...';
+
+    try {
+        const response = await fetch(endpoint, {
+            headers: {
+                'Accept': 'application/vnd.github+json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Unable to reach GitHub');
+        }
+
+        const commits = await response.json();
+
+        if (!Array.isArray(commits) || commits.length === 0) {
+            statusEl.textContent = 'No updates published yet.';
+            return;
+        }
+
+        statusEl.remove();
+
+        commits.forEach(commitData => {
+            const commit = commitData.commit;
+            if (!commit) return;
+
+            const messageLines = commit.message
+                ?.split('\n')
+                .map(line => line.trim())
+                .filter(Boolean) || [];
+
+            const title = messageLines.shift() || 'Update';
+            const changes = messageLines.length > 0 ? messageLines : ['View commit for more details'];
+            const date = commit.author?.date
+                ? new Date(commit.author.date).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                })
+                : 'Unknown date';
+
+            const item = document.createElement('div');
+            item.className = 'changelog-item';
+
+            const marker = document.createElement('div');
+            marker.className = 'changelog-marker';
+
+            const content = document.createElement('div');
+            content.className = 'changelog-content';
+
+            const header = document.createElement('div');
+            header.className = 'changelog-header';
+
+            const titleEl = document.createElement('h3');
+            titleEl.textContent = title;
+
+            const dateEl = document.createElement('span');
+            dateEl.className = 'changelog-date';
+            dateEl.textContent = date;
+
+            header.appendChild(titleEl);
+            header.appendChild(dateEl);
+
+            const list = document.createElement('ul');
+            list.className = 'changelog-changes';
+            changes.forEach(change => {
+                const li = document.createElement('li');
+                li.textContent = change;
+                list.appendChild(li);
+            });
+
+            const link = document.createElement('a');
+            link.className = 'changelog-link';
+            link.href = commitData.html_url || '#';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = 'View Commit';
+
+            content.appendChild(header);
+            content.appendChild(list);
+            content.appendChild(link);
+
+            item.appendChild(marker);
+            item.appendChild(content);
+
+            changelogList.appendChild(item);
+        });
+    } catch (error) {
+        statusEl.textContent = 'Unable to load updates. Please try again later.';
+        console.error('Changelog fetch failed:', error);
+    }
+}
+
 // Initialize Everything
 function init() {
     initCursorGlow();
@@ -250,6 +350,7 @@ function init() {
     initMagneticButtons();
     initSmoothScroll();
     initActiveNavLink();
+    initChangelogFeed();
 }
 
 // Run when DOM is ready

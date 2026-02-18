@@ -318,16 +318,13 @@ async function initChangelogFeed() {
                 list.appendChild(li);
             });
 
-            const link = document.createElement('a');
-            link.className = 'changelog-link';
-            link.href = commitData.html_url || '#';
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            link.textContent = 'View Commit';
+            const source = document.createElement('p');
+            source.className = 'changelog-source';
+            source.textContent = 'Source: Horizon Update Logs README';
 
             content.appendChild(header);
             content.appendChild(list);
-            content.appendChild(link);
+            content.appendChild(source);
 
             item.appendChild(marker);
             item.appendChild(content);

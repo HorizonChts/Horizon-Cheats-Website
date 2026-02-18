@@ -246,13 +246,13 @@ async function initChangelogFeed() {
     const changelogList = document.querySelector('.changelog-list');
     if (!statusEl || !changelogList) return;
 
-    const endpoint = 'https://api.github.com/repos/HorizonChts/Horizon-Update-Logs/commits?per_page=5';
+    const endpoint = 'https://raw.githubusercontent.com/HorizonChts/Horizon-Update-Logs/main/README.md';
     statusEl.textContent = 'Fetching latest updates...';
 
     try {
         const response = await fetch(endpoint, {
             headers: {
-                'Accept': 'application/vnd.github+json'
+                'Accept': 'text/plain'
             }
         });
 
@@ -260,33 +260,28 @@ async function initChangelogFeed() {
             throw new Error('Unable to reach GitHub');
         }
 
-        const commits = await response.json();
+        const text = await response.text();
+        const updatedAt = response.headers.get('last-modified');
+        const formattedDate = updatedAt
+            ? new Date(updatedAt).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            })
+            : 'Recently updated';
 
-        if (!Array.isArray(commits) || commits.length === 0) {
+        const entries = parseReadmeChangelog(text);
+
+        if (entries.length === 0) {
             statusEl.textContent = 'No updates published yet.';
             return;
         }
 
         statusEl.remove();
 
-        commits.forEach(commitData => {
-            const commit = commitData.commit;
-            if (!commit) return;
-
-            const messageLines = commit.message
-                ?.split('\n')
-                .map(line => line.trim())
-                .filter(Boolean) || [];
-
-            const title = messageLines.shift() || 'Update';
-            const changes = messageLines.length > 0 ? messageLines : ['View commit for more details'];
-            const date = commit.author?.date
-                ? new Date(commit.author.date).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                })
-                : 'Unknown date';
+        entries.slice(0, 5).forEach(entry => {
+            const title = entry.title || 'Update';
+            const changes = entry.body.length > 0 ? entry.body : ['Refer to README for details'];
 
             const item = document.createElement('div');
             item.className = 'changelog-item';
@@ -305,7 +300,7 @@ async function initChangelogFeed() {
 
             const dateEl = document.createElement('span');
             dateEl.className = 'changelog-date';
-            dateEl.textContent = date;
+            dateEl.textContent = formattedDate;
 
             header.appendChild(titleEl);
             header.appendChild(dateEl);
@@ -335,6 +330,39 @@ async function initChangelogFeed() {
         statusEl.textContent = 'Unable to load updates. Please try again later.';
         console.error('Changelog fetch failed:', error);
     }
+}
+
+function parseReadmeChangelog(rawText) {
+    if (!rawText) return [];
+    const normalized = rawText.replace(/\r\n/g, '\n').trim();
+    if (!normalized) return [];
+
+    const lines = normalized.split('\n');
+    const entries = [];
+    let current = null;
+
+    lines.forEach(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+
+        if (trimmed.startsWith('## ')) {
+            if (current) entries.push(current);
+            current = { title: trimmed.replace(/^##\s+/, '').trim(), body: [] };
+        } else if (trimmed.startsWith('# ') && !current) {
+            current = { title: trimmed.replace(/^#\s+/, '').trim(), body: [] };
+        } else {
+            if (!current) {
+                current = { title: 'Latest Update', body: [] };
+            }
+            current.body.push(trimmed.replace(/^[-*]\s*/, ''));
+        }
+    });
+
+    if (current && (current.title || current.body.length)) {
+        entries.push(current);
+    }
+
+    return entries;
 }
 
 // Initialize Everything

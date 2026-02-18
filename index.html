@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+        <div class="ambient-grid"></div>
+    </div>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -61,8 +67,8 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
                         </span>
                         <div>
-                            <p class="trust-label">Live patch monitor</p>
-                            <p class="trust-copy">Status refreshes every few seconds.</p>
+                            <p class="trust-label">Smart patch alerts</p>
+                            <p class="trust-copy">We pause injections the moment a game updates.</p>
                         </div>
                     </div>
                     <div class="trust-item">
@@ -70,42 +76,41 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
                         </span>
                         <div>
-                            <p class="trust-label">Human support</p>
-                            <p class="trust-copy">Real staff, real-time chat.</p>
+                            <p class="trust-label">On-call humans</p>
+                            <p class="trust-copy">Real Horizon staff guide installs in under 5 minutes.</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="hero-visual" aria-label="Live system summary">
                 <div class="hero-panel">
-                    <div class="hero-panel-header">
-                        <div>
-                            <p class="panel-label">Integrity Status</p>
-                            <p class="panel-value">Stable</p>
+                    <div class="panel-chip">Live Horizon Snapshot</div>
+                    <div class="panel-metrics">
+                        <div class="panel-metric">
+                            <div>
+                                <p class="panel-metric-label">Loader</p>
+                                <p class="panel-metric-copy">Latest build signed</p>
+                            </div>
+                            <span class="panel-pill safe">Undetected</span>
                         </div>
-                        <span class="panel-dot"></span>
+                        <div class="panel-metric">
+                            <div>
+                                <p class="panel-metric-label">Injection queue</p>
+                                <p class="panel-metric-copy">Slots available</p>
+                            </div>
+                            <span class="panel-pill online">Instant</span>
+                        </div>
+                        <div class="panel-metric">
+                            <div>
+                                <p class="panel-metric-label">Support ETA</p>
+                                <p class="panel-metric-copy">Dedicated staff</p>
+                            </div>
+                            <span class="panel-pill muted">~3 min</span>
+                        </div>
                     </div>
-                    <div class="hero-panel-body">
-                        <div class="panel-row">
-                            <span>Loader</span>
-                            <span class="panel-pill safe">Verified</span>
-                        </div>
-                        <div class="panel-row">
-                            <span>Detection</span>
-                            <span class="panel-pill online">Clean</span>
-                        </div>
-                        <div class="panel-row">
-                            <span>Queue</span>
-                            <span class="panel-pill muted">Instant</span>
-                        </div>
-                        <div class="panel-note">Updated automatically. No refresh needed.</div>
-                    </div>
-                    <div class="hero-panel-footer">
-                        <div>
-                            <p class="panel-label">Support chat</p>
-                            <p class="panel-value">Under 4 min</p>
-                        </div>
-                        <a href="#discord" class="panel-link">Open Discord</a>
+                    <div class="panel-handoff">
+                        <p>Need help? Jump into Discord and we’ll walk you through the first run.</p>
+                        <a href="#discord" class="panel-link">Talk to support</a>
                     </div>
                 </div>
             </div>

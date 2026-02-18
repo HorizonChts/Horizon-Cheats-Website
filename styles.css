@@ -297,6 +297,20 @@ body:hover .cursor-glow {
     overflow: hidden;
 }
 
+.btn::after,
+.hero-scroll-indicator::after,
+.panel-link::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    border: 2px solid var(--accent-secondary);
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+}
+
 .btn:hover {
     transform: translateY(-3px);
 }
@@ -305,11 +319,11 @@ body:hover .cursor-glow {
     transform: scale(0.98);
 }
 
-.btn:focus-visible,
-.hero-scroll-indicator:focus-visible,
-.panel-link:focus-visible {
-    outline: 2px solid var(--accent-secondary);
-    outline-offset: 4px;
+.btn:focus-visible::after,
+.hero-scroll-indicator:focus-visible::after,
+.panel-link:focus-visible::after {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .btn-primary {
@@ -460,19 +474,22 @@ body:hover .cursor-glow {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline-block;
-    animation: heroTextPulse 6s ease-in-out infinite;
+    background-size: 200% 200%;
+    animation: heroTextGlow 7s ease-in-out infinite;
 }
 
-@keyframes heroTextPulse {
-    0%, 100% {
-        transform: translateY(0);
-        letter-spacing: normal;
+@keyframes heroTextGlow {
+    0% {
+        background-position: 0% 50%;
         filter: drop-shadow(0 0 0 rgba(59, 130, 246, 0));
     }
     50% {
-        transform: translateY(-6px);
-        letter-spacing: 0.05em;
-        filter: drop-shadow(0 8px 20px rgba(59, 130, 246, 0.3));
+        background-position: 100% 50%;
+        filter: drop-shadow(0 6px 18px rgba(59, 130, 246, 0.3));
+    }
+    100% {
+        background-position: 0% 50%;
+        filter: drop-shadow(0 0 0 rgba(59, 130, 246, 0));
     }
 }
 
@@ -504,9 +521,6 @@ body:hover .cursor-glow {
     display: flex;
     gap: 12px;
     padding: 14px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius-md);
-    background: rgba(15, 23, 42, 0.4);
     box-shadow: none;
     transition: border-color 0.3s ease, background 0.3s ease;
     text-align: left;
@@ -925,6 +939,13 @@ body:hover .cursor-glow {
     margin-bottom: 20px;
 }
 
+.download-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+}
+
 .download-note {
     text-align: center;
     margin-top: 40px;
@@ -1014,7 +1035,7 @@ body:hover .cursor-glow {
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-out;
+    transition: max-height 0.6s ease;
 }
 
 .faq-answer p {
@@ -1023,7 +1044,7 @@ body:hover .cursor-glow {
     line-height: 1.7;
     opacity: 0;
     transform: translateY(-10px);
-    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+    transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
 }
 
 .faq-item.active .faq-answer p {
@@ -1032,7 +1053,7 @@ body:hover .cursor-glow {
 }
 
 .faq-item.active .faq-answer {
-    max-height: 300px;
+    max-height: 380px;
 }
 
 /* ===================================
@@ -1085,6 +1106,36 @@ body:hover .cursor-glow {
 
 .changelog-item:last-child {
     margin-bottom: 0;
+}
+
+.spotlight-grid {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.spotlight-card {
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+}
+
+.spotlight-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent-primary);
+}
+
+.spotlight-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.spotlight-card p {
+    color: var(--text-secondary);
 }
 
 .changelog-marker {

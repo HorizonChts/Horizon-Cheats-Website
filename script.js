@@ -240,11 +240,16 @@ function initActiveNavLink() {
     window.addEventListener('scroll', handleScroll, { passive: true });
 }
 
+let changelogLoading = false;
+let changelogLoaded = false;
+
 // Github Changelog Feed
 async function initChangelogFeed() {
     const statusEl = document.querySelector('[data-changelog-status]');
     const changelogList = document.querySelector('.changelog-list');
-    if (!statusEl || !changelogList) return;
+    if (!statusEl || !changelogList || changelogLoading || changelogLoaded) return;
+
+    changelogLoading = true;
 
     const endpoint = 'https://raw.githubusercontent.com/HorizonChts/Horizon-Update-Logs/main/README.md';
     statusEl.textContent = 'Fetching latest updates...';
@@ -326,10 +331,37 @@ async function initChangelogFeed() {
 
             changelogList.appendChild(item);
         });
+
+        changelogLoaded = true;
     } catch (error) {
         statusEl.textContent = 'Unable to load updates. Please try again later.';
         console.error('Changelog fetch failed:', error);
+    } finally {
+        changelogLoading = false;
     }
+}
+
+function setupChangelogLazyLoad() {
+    const section = document.getElementById('changelog');
+    if (!section) return;
+
+    if (!('IntersectionObserver' in window)) {
+        initChangelogFeed();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                initChangelogFeed();
+                observer.disconnect();
+            }
+        });
+    }, {
+        rootMargin: '0px 0px -35% 0px'
+    });
+
+    observer.observe(section);
 }
 
 function parseReadmeChangelog(rawText) {
@@ -375,7 +407,7 @@ function init() {
     initMagneticButtons();
     initSmoothScroll();
     initActiveNavLink();
-    initChangelogFeed();
+    setupChangelogLazyLoad();
 }
 
 // Run when DOM is ready

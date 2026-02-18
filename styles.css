@@ -292,13 +292,13 @@ body:hover .cursor-glow {
     border: none;
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
     position: relative;
     overflow: hidden;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
 .btn:active {
@@ -459,6 +459,21 @@ body:hover .cursor-glow {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    display: inline-block;
+    animation: heroTextPulse 6s ease-in-out infinite;
+}
+
+@keyframes heroTextPulse {
+    0%, 100% {
+        transform: translateY(0);
+        letter-spacing: normal;
+        filter: drop-shadow(0 0 0 rgba(59, 130, 246, 0));
+    }
+    50% {
+        transform: translateY(-6px);
+        letter-spacing: 0.05em;
+        filter: drop-shadow(0 8px 20px rgba(59, 130, 246, 0.3));
+    }
 }
 
 .hero-subtitle {
@@ -808,11 +823,11 @@ body:hover .cursor-glow {
     border-radius: var(--radius-lg);
     padding: 48px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .coming-soon-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     border-color: var(--accent-primary);
     box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
 }
@@ -867,11 +882,11 @@ body:hover .cursor-glow {
     border-radius: var(--radius-lg);
     padding: 32px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .download-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     border-color: var(--accent-primary);
     box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
 }
@@ -947,12 +962,13 @@ body:hover .cursor-glow {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     overflow: hidden;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .faq-item:hover {
     border-color: var(--accent-primary);
-    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18);
+    transform: translateY(-4px);
 }
 
 .faq-item.active {

@@ -14,6 +14,69 @@ function throttle(func, limit) {
     };
 }
 
+function initNavDropdown() {
+    const dropdown = document.querySelector('[data-nav-dropdown-container]');
+    const toggle = dropdown?.querySelector('[data-nav-dropdown]');
+    const menu = dropdown?.querySelector('.nav-dropdown-menu');
+    if (!dropdown || !toggle || !menu) return;
+
+    const closeDropdown = () => dropdown.classList.remove('open');
+
+    toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        dropdown.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+            closeDropdown();
+        }
+    });
+}
+
+function initInfoModals() {
+    const modal = document.querySelector('[data-info-modal]');
+    const titleEl = document.querySelector('[data-info-title]');
+    const bodyEl = document.querySelector('[data-info-body]');
+    const triggers = document.querySelectorAll('[data-info-trigger]');
+    const closeButtons = document.querySelectorAll('[data-info-close]');
+    const templates = {
+        terms: document.getElementById('info-terms'),
+        privacy: document.getElementById('info-privacy'),
+        affiliate: document.getElementById('info-affiliate')
+    };
+
+    if (!modal || !titleEl || !bodyEl || !triggers.length) return;
+
+    const openModal = (target) => {
+        const template = templates[target];
+        if (!template) return;
+        titleEl.textContent = target === 'affiliate' ? 'Affiliate Program' : target === 'privacy' ? 'Privacy Policy' : 'Terms of Service';
+        bodyEl.innerHTML = template.innerHTML;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+    };
+
+    triggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const target = trigger.getAttribute('data-info-target');
+            openModal(target);
+        });
+    });
+
+    closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+}
+
 // RequestAnimationFrame throttle
 function rafThrottle(func) {
     let rafId = null;
@@ -461,9 +524,11 @@ function parseReadmeChangelog(rawText) {
 function init() {
     initCursorGlow();
     initMobileMenu();
+    initNavDropdown();
     initNavbarScroll();
     initFAQ();
     initFeatureModal();
+    initInfoModals();
     initRevealAnimations();
     initMagneticButtons();
     initSmoothScroll();

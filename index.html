@@ -27,7 +27,16 @@
                 <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#features" class="nav-link">Features</a></li>
                 <li><a href="#shop" class="nav-link">Shop</a></li>
-                <li><a href="#download" class="nav-link">Download</a></li>
+                <li class="nav-dropdown" data-nav-dropdown-container>
+                    <button class="nav-link nav-dropdown-toggle" type="button" data-nav-dropdown>
+                        Download
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="nav-dropdown-menu" aria-label="Download options">
+                        <a href="cs2.html">CS2 Internal</a>
+                        <a href="roblox.html">Roblox External</a>
+                    </div>
+                </li>
                 <li><a href="#faq" class="nav-link">FAQ</a></li>
                 <li><a href="#discord" class="nav-link">Discord</a></li>
             </ul>
@@ -43,11 +52,23 @@
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <span class="status-badge">
+                    <a href="#faq" class="status-badge badge-info">
                         <span class="status-dot"></span>
                         Undetected
-                    </span>
-                    <span class="version-badge">v2.0 Released</span>
+                        <span class="badge-tooltip" role="status">
+                            <strong>Status meanings</strong>
+                            <span>Last updated on Feb 19, 2026</span>
+                            <span>Click for more info</span>
+                        </span>
+                    </a>
+                    <a href="#changelog" class="version-badge badge-info">
+                        v2.0 Released
+                        <span class="badge-tooltip" role="status">
+                            <strong>Release details</strong>
+                            <span>Last updated on Feb 19, 2026</span>
+                            <span>Click for more info</span>
+                        </span>
+                    </a>
                 </div>
                 <h1 class="hero-title">
                     Undetected power,<br>
@@ -316,8 +337,9 @@
                     <div class="footer-column">
                         <h4>Legal</h4>
                         <ul>
-                            <li><a href="#">Terms of Service</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><button class="link-button" data-info-trigger data-info-target="terms">Terms of Service</button></li>
+                            <li><button class="link-button" data-info-trigger data-info-target="privacy">Privacy Policy</button></li>
+                            <li><button class="link-button" data-info-trigger data-info-target="affiliate">Affiliate Program</button></li>
                         </ul>
                     </div>
                 </div>
@@ -328,6 +350,19 @@
         </div>
     </footer>
 
+    <template id="info-terms" data-info-template>
+        <p>By accessing or using Horizon software and services, you agree to our Terms of Service. This includes our usage license, refund policy, and limitation of liability outlined on the dedicated Terms page.</p>
+        <p>Need the full legal copy? <a href="terms.html">Open the Terms page</a>.</p>
+    </template>
+    <template id="info-privacy" data-info-template>
+        <p>We collect only the data required to authenticate your Horizon account, keep loaders secure, and provide support. We do not sell or share personal data with third parties.</p>
+        <p>Full privacy statement coming soon.</p>
+    </template>
+    <template id="info-affiliate" data-info-template>
+        <p>The Horizon affiliate program is launching soon. Earn rewards for onboarding new teams and creators while giving them a safer loader experience.</p>
+        <p>Drop into Discord to reserve your invite.</p>
+    </template>
+
     <div class="feature-modal" data-feature-modal aria-hidden="true">
         <div class="feature-modal-overlay" data-feature-close></div>
         <div class="feature-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="featureModalTitle">
@@ -337,6 +372,19 @@
             <div class="feature-modal-content">
                 <h3 id="featureModalTitle" data-feature-modal-title></h3>
                 <p data-feature-modal-body></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-modal" data-info-modal aria-hidden="true">
+        <div class="feature-modal-overlay" data-info-close></div>
+        <div class="info-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+            <button class="feature-modal-close" data-info-close aria-label="Close dialog">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="feature-modal-content">
+                <h3 id="infoModalTitle" data-info-title></h3>
+                <div data-info-body></div>
             </div>
         </div>
     </div>

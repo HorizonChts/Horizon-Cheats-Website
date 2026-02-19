@@ -500,6 +500,19 @@ body:hover .cursor-glow {
     background: var(--bg-tertiary);
 }
 
+.btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+}
+
+.btn-ghost:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    background: rgba(59, 130, 246, 0.08);
+}
+
 .btn-discord {
     background: #5865F2;
     color: white;

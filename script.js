@@ -441,13 +441,8 @@ async function initChangelogFeed() {
                 list.appendChild(li);
             });
 
-            const source = document.createElement('p');
-            source.className = 'changelog-source';
-            source.textContent = 'Source: Horizon Update Logs README';
-
             content.appendChild(header);
             content.appendChild(list);
-            content.appendChild(source);
 
             item.appendChild(marker);
             item.appendChild(content);

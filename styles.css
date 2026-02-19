@@ -83,11 +83,15 @@ html {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+}
+
+body.modal-open {
+    overflow: hidden;
 }
 
 .container {
@@ -302,12 +306,12 @@ body:hover .cursor-glow {
 .panel-link::after {
     content: '';
     position: absolute;
-    inset: -4px;
+    inset: -6px;
     border-radius: inherit;
     border: 2px solid var(--accent-secondary);
     opacity: 0;
-    transform: scale(0.98);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    transform: scale(0.92);
+    transition: opacity 0.45s ease, transform 0.45s ease;
     pointer-events: none;
 }
 
@@ -729,24 +733,11 @@ body:hover .cursor-glow {
    Section Headers
    =================================== */
 .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
     text-align: center;
-    margin-bottom: 60px;
-}
-
-.section-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(15, 23, 42, 0.6);
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin: 0 auto 24px;
-    display: table;
 }
 
 .section-title {
@@ -781,6 +772,7 @@ body:hover .cursor-glow {
     padding: 32px;
     transform: translateY(0) scale(1);
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    cursor: pointer;
 }
 
 .feature-card:hover,
@@ -818,6 +810,11 @@ body:hover .cursor-glow {
 .feature-card p {
     color: var(--text-secondary);
     font-size: 0.95rem;
+}
+
+.feature-card:focus-visible::after {
+    opacity: 1;
+    transform: scale(1);
 }
 
 /* ===================================
@@ -1136,6 +1133,88 @@ body:hover .cursor-glow {
 
 .spotlight-card p {
     color: var(--text-secondary);
+}
+
+/* ===================================
+   Feature Modal
+   =================================== */
+.feature-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(2, 6, 23, 0.75);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    z-index: 2000;
+}
+
+.feature-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.feature-modal-overlay {
+    position: absolute;
+    inset: 0;
+}
+
+.feature-modal-dialog {
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    box-shadow: 0 30px 80px rgba(2, 6, 23, 0.6);
+    transform: translateY(20px);
+    animation: modalRise 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.feature-modal-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
+.feature-modal-content p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.feature-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.feature-modal-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+@keyframes modalRise {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .changelog-marker {

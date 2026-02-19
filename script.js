@@ -142,6 +142,66 @@ function initFAQ() {
     });
 }
 
+// Feature Modal
+function initFeatureModal() {
+    const cards = document.querySelectorAll('.feature-card[data-feature-title]');
+    const modal = document.querySelector('[data-feature-modal]');
+    const modalTitle = document.querySelector('[data-feature-modal-title]');
+    const modalBody = document.querySelector('[data-feature-modal-body]');
+    const closeTriggers = document.querySelectorAll('[data-feature-close]');
+    if (!cards.length || !modal || !modalTitle || !modalBody) return;
+
+    let lastFocusedElement = null;
+
+    const openModal = (title, detail) => {
+        lastFocusedElement = document.activeElement;
+        modalTitle.textContent = title;
+        modalBody.textContent = detail;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        requestAnimationFrame(() => {
+            const dialog = modal.querySelector('.feature-modal-dialog');
+            dialog?.focus?.();
+        });
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        if (lastFocusedElement) {
+            lastFocusedElement.focus();
+        }
+    };
+
+    cards.forEach(card => {
+        const handler = () => {
+            const title = card.getAttribute('data-feature-title') || 'Feature';
+            const detail = card.getAttribute('data-feature-detail') || '';
+            openModal(title, detail);
+        };
+
+        card.addEventListener('click', handler);
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handler();
+            }
+        });
+    });
+
+    closeTriggers.forEach(trigger => {
+        trigger.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+}
+
 // Reveal Animations
 function initRevealAnimations() {
     const revealElements = document.querySelectorAll('.feature-card, .download-card, .faq-item, .changelog-item');
@@ -403,6 +463,7 @@ function init() {
     initMobileMenu();
     initNavbarScroll();
     initFAQ();
+    initFeatureModal();
     initRevealAnimations();
     initMagneticButtons();
     initSmoothScroll();

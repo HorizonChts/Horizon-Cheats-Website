@@ -154,9 +154,9 @@ section {
     --bg-secondary: #0d0d0d;
     --bg-tertiary: #1a1a1a;
     --card-bg: rgba(255, 255, 255, 0.04);
-    --accent-primary: #3b82f6;
-    --accent-secondary: #06b6d4;
-    --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+    --accent-primary: #befc2f;
+    --accent-secondary: #ff4dd8;
+    --accent-gradient: linear-gradient(135deg, #befc2f 0%, #ff4dd8 100%);
     --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.75);
     --text-muted: rgba(255, 255, 255, 0.5);
@@ -167,7 +167,7 @@ section {
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-    --glow-blue: 0 0 20px rgba(59, 130, 246, 0.3);
+    --glow-blue: 0 0 20px rgba(190, 252, 47, 0.35);
 }
 
 /* ===================================

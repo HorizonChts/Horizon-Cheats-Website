@@ -25,12 +25,12 @@ function initCursorSpotlight() {
     // Smooth spotlight following
     currentX += (pointerX - currentX) * 0.12;
     currentY += (pointerY - currentY) * 0.12;
-    spotlight.style.transform = `translate3d(${currentX - 260}px, ${currentY - 260}px, 0)`;
+    spotlight.style.transform = `translate3d(${currentX - 200}px, ${currentY - 200}px, 0)`;
     
     // Even smoother glow following
     glowX += (pointerX - glowX) * 0.08;
     glowY += (pointerY - glowY) * 0.08;
-    glow.style.transform = `translate3d(${glowX - 150}px, ${glowY - 150}px, 0)`;
+    glow.style.transform = `translate3d(${glowX - 125}px, ${glowY - 125}px, 0)`;
     
     rafId = requestAnimationFrame(updatePosition);
   };
@@ -120,14 +120,14 @@ function initMouseTracking() {
       const distanceY = mouseY - centerY;
       const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
       
-      if (distance < 150) {
-        const factor = 1 - (distance / 150);
-        const moveX = distanceX * factor * 0.15;
-        const moveY = distanceY * factor * 0.15;
-        const scale = 1 + factor * 0.05;
+      if (distance < 120) {
+        const factor = 1 - (distance / 120);
+        const moveX = distanceX * factor * 0.08;
+        const moveY = distanceY * factor * 0.08;
+        const scale = 1 + factor * 0.02;
         
         el.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
-        el.style.boxShadow = `${moveX * 0.3}px ${moveY * 0.3}px 25px rgba(255, 255, 255, ${0.2 * factor})`;
+        el.style.boxShadow = `${moveX * 0.2}px ${moveY * 0.2}px 15px rgba(255, 255, 255, ${0.15 * factor})`;
       } else {
         // Reset to default hover state
         if (!el.matches(':hover')) {

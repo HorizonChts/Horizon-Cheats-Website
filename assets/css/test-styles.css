@@ -22,17 +22,17 @@
   --transition-smooth: 320ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   
   /* Hover Distances */
-  --hover-lift-small: 2px;
-  --hover-lift-medium: 8px;
-  --hover-lift-large: 16px;
-  --hover-scale-small: 1.02;
-  --hover-scale-medium: 1.05;
+  --hover-lift-small: 1px;
+  --hover-lift-medium: 4px;
+  --hover-lift-large: 8px;
+  --hover-scale-small: 1.01;
+  --hover-scale-medium: 1.02;
   
   /* Glow Intensities */
-  --glow-subtle: 0 0 20px rgba(255, 255, 255, 0.1);
-  --glow-medium: 0 0 30px rgba(255, 255, 255, 0.2);
-  --glow-strong: 0 0 40px rgba(255, 255, 255, 0.3);
-  --glow-text: 0 0 15px rgba(255, 255, 255, 0.5);
+  --glow-subtle: 0 0 10px rgba(255, 255, 255, 0.08);
+  --glow-medium: 0 0 15px rgba(255, 255, 255, 0.12);
+  --glow-strong: 0 0 20px rgba(255, 255, 255, 0.16);
+  --glow-text: 0 0 8px rgba(255, 255, 255, 0.3);
   
   /* Mouse Tracking */
   --mouse-radius: 150px;
@@ -911,12 +911,11 @@ footer {
 
 .cursor-spotlight {
   position: fixed;
-  width: 520px;
-  height: 520px;
+  width: 400px;
+  height: 400px;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 70%);
-  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0) 70%);
   opacity: 0;
   transition: opacity var(--transition-base), transform 120ms ease-out;
   z-index: 2;
@@ -925,12 +924,11 @@ footer {
 
 .cursor-glow {
   position: fixed;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 60%);
-  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 60%);
   opacity: 0;
   transition: opacity var(--transition-base), transform 100ms ease-out;
   z-index: 1;
@@ -939,11 +937,11 @@ footer {
 
 .cursor-particle {
   position: fixed;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   pointer-events: none;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.8);
   opacity: 0;
   transition: opacity var(--transition-fast), transform var(--transition-fast);
   z-index: 3;
@@ -951,11 +949,11 @@ footer {
 }
 
 body.cursor-active .cursor-spotlight {
-  opacity: 0.9;
+  opacity: 1;
 }
 
 body.cursor-active .cursor-glow {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .fade-in {

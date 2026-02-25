@@ -122,8 +122,13 @@ button,
 }
 
 .btn:hover::after {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
+}
+
+.btn:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 35px rgba(255, 255, 255, 0.15) !important;
 }
 
 .btn:focus-visible {
@@ -131,7 +136,7 @@ button,
 }
 
 .btn:active {
-  animation: button-press 240ms ease;
+  animation: button-press 240ms ease !important;
 }
 
 @keyframes button-press {
@@ -167,8 +172,8 @@ button,
 }
 
 .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.05) !important;
+  transform: translateY(-2px) !important;
 }
 
 .btn-outline {
@@ -178,7 +183,7 @@ button,
 }
 
 .btn-outline:hover {
-  background: rgba(93, 216, 255, 0.12);
+  background: rgba(93, 216, 255, 0.12) !important;
 }
 
 .badge {
@@ -245,9 +250,9 @@ nav {
 }
 
 .logo:hover {
-  color: #ffffff;
-  transform: translateY(-3px);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  color: #ffffff !important;
+  transform: translateY(-3px) !important;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5) !important;
 }
 
 nav ul {
@@ -283,12 +288,12 @@ nav a::after {
 
 nav a:hover::after,
 nav a.active::after {
-  transform: scaleX(1);
+  transform: scaleX(1) !important;
 }
 
 nav a:hover,
 nav a.active {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .nav-cta {
@@ -303,10 +308,10 @@ nav a.active {
 }
 
 .nav-cta:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.8);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2) !important;
 }
 
 .nav-cta svg {
@@ -353,7 +358,7 @@ nav a.active {
   height: 60%;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.22), transparent 65%);
   filter: blur(60px);
-  animation: hero-glow 14s ease-in-out infinite;
+  animation: hero-glow 14s ease-in-out infinite !important;
   opacity: 0.5;
 }
 
@@ -363,7 +368,7 @@ nav a.active {
   background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
   opacity: 0.5;
-  animation: grid-pan 16s linear infinite;
+  animation: grid-pan 16s linear infinite !important;
 }
 
 .hero-scanline {
@@ -371,7 +376,7 @@ nav a.active {
   inset: 0;
   background: linear-gradient(transparent 60%, rgba(255, 255, 255, 0.06), transparent 40%);
   transform: translateY(-100%);
-  animation: scan 8s linear infinite;
+  animation: scan 8s linear infinite !important;
   opacity: 0.7;
 }
 
@@ -855,12 +860,12 @@ body.cursor-active .cursor-spotlight {
 .fade-in {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  transition: opacity 600ms ease-out, transform 600ms ease-out !important;
 }
 
 .fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 @media (max-width: 768px) {

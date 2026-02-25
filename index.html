@@ -1,397 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chemical.lol - Next Generation Software</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="ambient-bg" aria-hidden="true">
-        <div class="ambient-orb orb-1"></div>
-        <div class="ambient-orb orb-2"></div>
-        <div class="ambient-orb orb-3"></div>
-        <div class="ambient-grid"></div>
-    </div>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                <span>Chemical.lol</span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chemical.lol — Premium Gaming Tools</title>
+    <meta
+      name="description"
+      content="Chemical.lol delivers premium Roblox external and CS2 internal tools with uncompromised safety, free forever."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="cursor-spotlight" aria-hidden="true"></div>
+    <nav>
+      <div class="nav-inner">
+        <a class="logo" href="/">Chemical.lol</a>
+        <ul>
+          <li><a class="active" href="/">Home</a></li>
+          <li><a href="/showcase.html">Showcase</a></li>
+          <li><a href="/install.html">Install</a></li>
+          <li><a href="/download.html">Download</a></li>
+          <li>
+            <a class="nav-cta" href="https://discord.gg/chemical" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path
+                  d="M20 4.5A18.64 18.64 0 0 0 15.65 3l-.2.42A13.15 13.15 0 0 1 12 3a13.37 13.37 0 0 1-3.52.45L8.29 3A18.64 18.64 0 0 0 4 4.5C1.47 8.3.58 12 1 15.65A18.3 18.3 0 0 0 8.13 21l1-1.37A11.82 11.82 0 0 1 6.9 18l.63-.49a12.55 12.55 0 0 0 8.94 0l.63.48a11.72 11.72 0 0 1-2.2 1.66l1 1.37A18.3 18.3 0 0 0 23 15.65C23.5 11.62 22.58 7.92 20 4.5ZM8.9 15.35A1.8 1.8 0 1 1 10.64 13a1.8 1.8 0 0 1-1.74 2.35Zm6.22 0A1.8 1.8 0 1 1 16.86 13a1.8 1.8 0 0 1-1.74 2.35Z"
+                  fill="currentColor"
+                />
+              </svg>
+              Discord
             </a>
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#features" class="nav-link">Features</a></li>
-                <li><a href="#shop" class="nav-link">Shop</a></li>
-                <li class="nav-dropdown" data-nav-dropdown-container>
-                    <button class="nav-link nav-dropdown-toggle" type="button" data-nav-dropdown>
-                        Download
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                    <div class="nav-dropdown-menu" aria-label="Download options">
-                        <a href="cs2.html">CS2 Internal</a>
-                        <a href="roblox.html">Roblox External</a>
-                    </div>
-                </li>
-                <li><a href="#faq" class="nav-link">FAQ</a></li>
-                <li><a href="#discord" class="nav-link">Discord</a></li>
-            </ul>
-            <a href="#shop" class="btn btn-primary nav-cta">Get Started</a>
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-            </button>
+          </li>
+        </ul>
+        <div class="nav-actions">
+          <a class="nav-cta" href="https://discord.gg/chemical" target="_blank" rel="noreferrer">Discord</a>
         </div>
+      </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <a href="#faq" class="status-badge badge-info">
-                        <span class="status-dot"></span>
-                        Undetected
-                        <span class="badge-tooltip" role="status">
-                            <strong>Status meanings</strong>
-                            <span>Last updated on Feb 19, 2026</span>
-                            <span>Click for more info</span>
-                        </span>
-                    </a>
-                    <a href="#changelog" class="version-badge badge-info">
-                        v2.0 Released
-                        <span class="badge-tooltip" role="status">
-                            <strong>Release details</strong>
-                            <span>Last updated on Feb 19, 2026</span>
-                            <span>Click for more info</span>
-                        </span>
-                    </a>
-                </div>
-                <h1 class="hero-title">
-                    Undetected power,<br>
-                    <span class="gradient-text">effortless control.</span>
-                </h1>
-                <div class="hero-cta">
-                    <a href="#shop" class="btn btn-primary btn-lg">Get Started</a>
-                    <a href="#download" class="btn btn-secondary btn-lg">Download Now</a>
-                </div>
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="fade-in">
+            <div class="badge">Premium Gaming Tools</div>
+            <h1>Premium Gaming Tools. Completely Free.</h1>
+            <p>
+              Roblox External and CS2 Internal built with obsessive attention to safety, stability, and community support.
+              No upsells. No catch. Just trustworthy tooling for serious players.
+            </p>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px">
+              <a class="btn btn-primary" href="/download.html">Download Now</a>
+              <a class="btn btn-ghost" href="https://discord.gg/chemical" target="_blank" rel="noreferrer">Join Discord</a>
             </div>
+            <div class="badge badge-success badge-status">Currently Undetected</div>
+          </div>
+          <div class="hero-visual fade-in" style="animation-delay: 120ms">
+            <div class="grid-overlay" aria-hidden="true"></div>
+            <div class="hero-scanline" aria-hidden="true"></div>
+            <div class="hero-stat">
+              <div>
+                <p style="margin: 0; color: var(--text-secondary)">Roblox External</p>
+                <strong>v2.4.1</strong>
+              </div>
+              <span class="status-undetected">Safe</span>
+            </div>
+            <div class="hero-stat">
+              <div>
+                <p style="margin: 0; color: var(--text-secondary)">CS2 Internal</p>
+                <strong>v1.9.8</strong>
+              </div>
+              <span style="color: var(--accent-primary)">Optimized</span>
+            </div>
+            <p style="margin-top: 32px">Meticulously tuned visuals, ESP, and quality-of-life enhancements designed for full control.</p>
+          </div>
         </div>
-        <button class="hero-scroll-indicator" aria-label="Scroll to features" onclick="document.querySelector('#features').scrollIntoView({behavior: 'smooth'});">
-            <span>Explore Chemical.lol</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="hero-bg-effect"></div>
-    </section>
+      </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
+      <section>
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Why Choose <span class="gradient-text">Chemical.lol</span></h2>
-                <p class="section-subtitle">Discover what makes us the best in the industry</p>
+          <div class="section-heading">
+            <div>
+              <p class="badge">Product Overview</p>
+              <h2>Two free tools. Two ecosystems.</h2>
+              <p>Choose Roblox External or CS2 Internal — both maintained, both safe, both supported by a relentless community.</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card" tabindex="0" role="button" data-feature-title="Undetected" data-feature-detail="Our driver randomization, encrypted loaders, and live patch monitoring keep Chemical.lol completely silent across kernel-level checks.">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-                    </div>
-                    <h3>Undetected</h3>
-                    <p>Advanced protection keeps you safe and undetected at all times.</p>
-                </div>
-                <div class="feature-card" tabindex="0" role="button" data-feature-title="Lightning Fast" data-feature-detail="Low-level injection and streaming-safe overlays mean no FPS loss, even while recording or streaming.">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                    </div>
-                    <h3>Lightning Fast</h3>
-                    <p>Optimized for maximum performance with minimal resource usage.</p>
-                </div>
-                <div class="feature-card" tabindex="0" role="button" data-feature-title="24/7 Support" data-feature-detail="Senior staff sit in Discord around the clock with remote-hand guidance for installs, configs, and troubleshooting.">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-                    </div>
-                    <h3>24/7 Support</h3>
-                    <p>Our dedicated team is always available to help you.</p>
-                </div>
-                <div class="feature-card" tabindex="0" role="button" data-feature-title="Regular Updates" data-feature-detail="Every patch ships with full change notes, automatic integrity scans, and toggles so you can downgrade instantly.">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    </div>
-                    <h3>Regular Updates</h3>
-                    <p>Constant improvements and new features released regularly.</p>
-                </div>
-                <div class="feature-card" tabindex="0" role="button" data-feature-title="Easy Setup" data-feature-detail="Guided onboarding walks you through first launch, config import, and hardware ID binding in minutes.">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                    </div>
-                    <h3>Easy Setup</h3>
-                    <p>Get started in minutes with our simple installation process.</p>
-                </div>
-                <div class="feature-card" tabindex="0" role="button" data-feature-title="Trusted" data-feature-detail="Creators, scrim teams, and tournament grinders rely on Chemical.lol daily for a stable pipeline.">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-                    </div>
-                    <h3>Trusted</h3>
-                    <p>Join thousands of satisfied users worldwide.</p>
-                </div>
-            </div>
+            <a class="btn btn-outline" href="/showcase.html">See features</a>
+          </div>
+          <div class="cards-grid">
+            <article class="card fade-in">
+              <p class="badge">Roblox External</p>
+              <h3>Precision overlay. Zero bloat.</h3>
+              <p>Transparent ESP, player tracking, and automation flows built for consistency on the latest Roblox builds.</p>
+              <ul>
+                <li>Adaptive ESP layers</li>
+                <li>Secure injection & watchdog</li>
+                <li>Customizable keybind sets</li>
+              </ul>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap">
+                <a class="btn btn-primary" href="/download.html#roblox">Download</a>
+                <a class="btn btn-ghost" href="/showcase.html#roblox">Learn more</a>
+              </div>
+            </article>
+            <article class="card fade-in" style="animation-delay: 120ms">
+              <p class="badge">CS2 Internal</p>
+              <h3>Competitive-grade internal.</h3>
+              <p>High-FPS visuals, recoil helpers, and information surfaces optimized for the latest CS2 updates.</p>
+              <ul>
+                <li>Modular ESP stacks</li>
+                <li>Silent aim assist safeguards</li>
+                <li>Performance-stable renderer</li>
+              </ul>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap">
+                <a class="btn btn-primary" href="/download.html#cs2">Download</a>
+                <a class="btn btn-ghost" href="/showcase.html#cs2">Learn more</a>
+              </div>
+            </article>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Download Section -->
-    <section id="download" class="download">
+      <section>
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Download <span class="gradient-text">Chemical.lol</span></h2>
-                <p class="section-subtitle">Get started with the latest version</p>
+          <div class="section-heading">
+            <div>
+              <p class="badge">Why Chemical</p>
+              <h2>Built for trust. Tuned for community.</h2>
             </div>
-            <div class="download-grid">
-                <div class="download-card">
-                    <div class="download-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                    </div>
-                    <h3>CS2 Internal</h3>
-                    <p class="download-version">Version 1.0.0</p>
-                    <div class="download-actions">
-                        <a class="btn btn-primary btn-full magnetic-btn" href="#" aria-label="Download CS2 Internal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            Download
-                        </a>
-                        <a class="btn btn-ghost btn-full" href="cs2.html">Learn More</a>
-                    </div>
-                </div>
-                <div class="download-card">
-                    <div class="download-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                    </div>
-                    <h3>Roblox External</h3>
-                    <p class="download-version">Version 1.0.0</p>
-                    <div class="download-actions">
-                        <a class="btn btn-primary btn-full magnetic-btn" href="#" aria-label="Download Roblox External">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            Download
-                        </a>
-                        <a class="btn btn-ghost btn-full" href="roblox.html">Learn More</a>
-                    </div>
-                </div>
+          </div>
+          <div class="benefits-grid">
+            <div class="benefit-card fade-in">
+              <h3>Free Forever</h3>
+              <p>No tiers, no locked features. Open download links for every update.</p>
             </div>
-            <div class="download-note">
-                <p>Last updated: January 15, 2026 | <a href="#changelog">View Changelog</a></p>
+            <div class="benefit-card fade-in" style="animation-delay: 120ms">
+              <h3>Active Development</h3>
+              <p>Rapid responses to Roblox & CS2 patches. Transparent changelogs.</p>
             </div>
+            <div class="benefit-card fade-in" style="animation-delay: 240ms">
+              <h3>Community Support</h3>
+              <p>Moderated Discord with installation help, troubleshooting, and news.</p>
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Shop Section -->
-    <section id="shop" class="shop">
+      <section>
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Shop <span class="gradient-text">Coming Soon</span></h2>
-                <p class="section-subtitle">Our store is under construction. Check back soon for amazing deals!</p>
+          <div class="support-section fade-in">
+            <h3>Need help? Join the community.</h3>
+            <p>Support, troubleshooting, and early changelog access all happen inside our Discord server.</p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px">
+              <a class="btn btn-primary" href="https://discord.gg/chemical" target="_blank" rel="noreferrer">Join Discord Server</a>
+              <a class="btn btn-ghost" href="/install.html">View Install Guide</a>
             </div>
-            <div class="coming-soon-card">
-                <div class="coming-soon-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                </div>
-                <h3>Coming Soon</h3>
-                <p>We're working hard to bring you the best products. Stay tuned!</p>
-                <a href="#discord" class="btn btn-primary">Get Notified</a>
-            </div>
+          </div>
         </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
-                <p class="section-subtitle">Got questions? We've got answers</p>
-            </div>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Is Chemical.lol safe to use?
-                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes! Chemical.lol is completely safe and undetected. We use advanced protection methods and regularly update our software to ensure maximum security for all users.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        How do I install Chemical.lol?
-                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Installation is simple! Download the installer from our website, run it, and follow the on-screen instructions. The whole process takes less than 2 minutes.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        What payment methods do you accept?
-                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We accept all major credit cards, PayPal, and various cryptocurrencies including Bitcoin and Ethereum. All payments are processed securely.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Can I get a refund?
-                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We offer a 24-hour money-back guarantee if you're not satisfied with our service. Contact our support team for assistance with refunds.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        How often are updates released?
-                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We release updates regularly - typically weekly for Premium users and bi-weekly for Basic users. Lifetime members get immediate access to all updates.</p>
-                    </div>
-                </div>
-            </div>
+    <footer>
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <h4>Chemical.lol</h4>
+          <p>Premium gaming tools, free forever. Transparent, safe, and community driven.</p>
+          <small>© 2026 Chemical.lol</small>
         </div>
-    </section>
-
-    <!-- Changelog Section -->
-    <section id="changelog" class="changelog">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Latest <span class="gradient-text">Updates</span></h2>
-                <p class="section-subtitle">See what's new in Chemical.lol</p>
-            </div>
-            <div class="changelog-list">
-                <div class="changelog-status" data-changelog-status>
-                    Fetching latest updates...
-                </div>
-            </div>
-            <div class="spotlight-grid">
-                <article class="spotlight-card">
-                    <h3>CS2 Internal Spotlight</h3>
-                    <p>Stride into Counter-Strike with kernel-level bypasses, humanized aim assist, and one-click profile swaps tailored for LAN or ranked. Built for zero-noise execution.</p>
-                </article>
-                <article class="spotlight-card">
-                    <h3>Roblox External Spotlight</h3>
-                    <p>Detach safely from the game client, script in Lua, and chain automations with Chemical.lol-safe sandboxing. Perfect for creators iterating on obbys or competitive modes.</p>
-                </article>
-            </div>
+        <div class="footer-links">
+          <strong>Quick Links</strong>
+          <a href="/">Home</a>
+          <a href="/showcase.html">Showcase</a>
+          <a href="/install.html">Install Guide</a>
+          <a href="/download.html">Download</a>
+          <a href="https://discord.gg/chemical" target="_blank" rel="noreferrer">Support</a>
         </div>
-    </section>
-
-    <!-- Discord Section -->
-    <section id="discord" class="discord">
-        <div class="container">
-            <div class="discord-card">
-                <div class="discord-content">
-                    <div class="discord-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-                    </div>
-                    <div class="discord-text">
-                        <h2>Join Our Community</h2>
-                        <p>Get support and stay updated on the latest news.</p>
-                    </div>
-                </div>
-                <a href="#" class="btn btn-discord btn-lg magnetic-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-                    Join Discord
-                </a>
-            </div>
+        <div class="footer-social">
+          <strong>Community</strong>
+          <button class="btn discord-btn" onclick="window.open('https://discord.gg/chemical','_blank')">Join Discord</button>
+          <a class="youtube-link" href="https://youtube.com/@chemical" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.8-.8-2.2-.8C15.4 5 12 5 12 5h0s-3.4 0-6.8.2c-.4 0-1.4 0-2.2.8-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.3.8 1.7.2 6.7.2 6.7.2s3.4 0 6.8-.2c.4 0 1.4 0 2.2-.8.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5c0-1.6-.2-3.2-.2-3.2ZM10 14.7V8.8l5.2 2.95Z"
+                fill="currentColor"
+              />
+            </svg>
+            YouTube Channel
+          </a>
+          <small>Need help? Join our Discord server.</small>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <a href="#" class="logo">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                        <span>Chemical.lol</span>
-                    </a>
-                    <p>Next generation software for the modern user.</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Product</h4>
-                        <ul>
-                            <li><a href="#features">Features</a></li>
-                            <li><a href="#shop">Shop</a></li>
-                            <li><a href="#download">Download</a></li>
-                            <li><a href="#changelog">Changelog</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Support</h4>
-                        <ul>
-                            <li><a href="#faq">FAQ</a></li>
-                            <li><a href="#discord">Discord</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Legal</h4>
-                        <ul>
-                            <li><button class="link-button" data-info-trigger data-info-target="terms">Terms of Service</button></li>
-                            <li><button class="link-button" data-info-trigger data-info-target="privacy">Privacy Policy</button></li>
-                            <li><button class="link-button" data-info-trigger data-info-target="affiliate">Affiliate Program</button></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Chemical.lol. All rights reserved.</p>
-            </div>
-        </div>
+      </div>
     </footer>
 
-    <template id="info-terms" data-info-template>
-        <p>By accessing or using Chemical.lol software and services, you agree to our Terms of Service. This includes our usage license, refund policy, and limitation of liability outlined on the dedicated Terms page.</p>
-        <p>Need the full legal copy? <a href="terms.html">Open the Terms page</a>.</p>
-    </template>
-    <template id="info-privacy" data-info-template>
-        <p>We collect only the data required to authenticate your Chemical.lol account, keep loaders secure, and provide support. We do not sell or share personal data with third parties.</p>
-        <p>Full privacy statement coming soon.</p>
-    </template>
-    <template id="info-affiliate" data-info-template>
-        <p>The Chemical.lol affiliate program is launching soon. Earn rewards for onboarding new teams and creators while giving them a safer loader experience.</p>
-        <p>Drop into Discord to reserve your invite.</p>
-    </template>
-
-    <div class="feature-modal" data-feature-modal aria-hidden="true">
-        <div class="feature-modal-overlay" data-feature-close></div>
-        <div class="feature-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="featureModalTitle">
-            <button class="feature-modal-close" data-feature-close aria-label="Close dialog">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-            <div class="feature-modal-content">
-                <h3 id="featureModalTitle" data-feature-modal-title></h3>
-                <p data-feature-modal-body></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="info-modal" data-info-modal aria-hidden="true">
-        <div class="feature-modal-overlay" data-info-close></div>
-        <div class="info-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
-            <button class="feature-modal-close" data-info-close aria-label="Close dialog">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-            <div class="feature-modal-content">
-                <h3 id="infoModalTitle" data-info-title></h3>
-                <div data-info-body></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cursor Glow Effect -->
-    <div class="cursor-glow"></div>
-
-    <script src="script.js"></script>
-</body>
+    <script defer src="/assets/js/main.js"></script>
+  </body>
 </html>

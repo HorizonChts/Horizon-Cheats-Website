@@ -104,7 +104,6 @@ function initMouseTracking() {
   const hoverElements = document.querySelectorAll('.logo, nav a, .nav-cta, .btn, .card, .badge, .benefit-card, .footer-links a, .footer-social a, .youtube-link');
   
   let mouseX = 0, mouseY = 0;
-  let currentX = 0, currentY = 0;
   
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
@@ -120,19 +119,30 @@ function initMouseTracking() {
       const distanceY = mouseY - centerY;
       const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
       
-      if (distance < 120) {
-        const factor = 1 - (distance / 120);
-        const moveX = distanceX * factor * 0.08;
-        const moveY = distanceY * factor * 0.08;
-        const scale = 1 + factor * 0.02;
+      if (distance < 150) {
+        const factor = 1 - (distance / 150);
+        const moveX = distanceX * factor * 0.05;
+        const moveY = distanceY * factor * 0.05;
         
-        el.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
-        el.style.boxShadow = `${moveX * 0.2}px ${moveY * 0.2}px 15px rgba(255, 255, 255, ${0.15 * factor})`;
+        // Calculate angle from element center to mouse
+        const angle = Math.atan2(distanceY, distanceX) * (180 / Math.PI);
+        
+        // Set CSS variables for directional effects
+        el.style.setProperty('--mouse-x', `${moveX}px`);
+        el.style.setProperty('--mouse-y', `${moveY}px`);
+        el.style.setProperty('--mouse-angle', `${angle}deg`);
+        
+        // Apply subtle transform
+        el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        el.style.boxShadow = `${moveX * 0.1}px ${moveY * 0.1}px 8px rgba(255, 255, 255, ${0.05 * factor})`;
       } else {
-        // Reset to default hover state
+        // Reset to default
         if (!el.matches(':hover')) {
           el.style.transform = '';
           el.style.boxShadow = '';
+          el.style.removeProperty('--mouse-x');
+          el.style.removeProperty('--mouse-y');
+          el.style.removeProperty('--mouse-angle');
         }
       }
     });

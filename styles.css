@@ -155,11 +155,11 @@ section {
     --bg-tertiary: #1a1a1a;
     --card-bg: rgba(255, 255, 255, 0.04);
     --accent-primary: #ffffff;
-    --accent-secondary: #e0e0e0;
-    --accent-gradient: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+    --accent-secondary: #ffffff;
+    --accent-gradient: #ffffff;
     --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.9);
-    --text-muted: rgba(255, 255, 255, 0.7);
+    --text-secondary: rgba(255, 255, 255, 1);
+    --text-muted: rgba(255, 255, 255, 1);
     --border-color: rgba(255, 255, 255, 0.3);
     --radius-sm: 8px;
     --radius-md: 12px;
@@ -208,7 +208,7 @@ body.modal-open {
     position: absolute;
     width: 480px;
     height: 480px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+    background: transparent;
     filter: blur(0px);
     border-radius: 50%;
     animation: floatOrb 18s ease-in-out infinite;
@@ -223,7 +223,7 @@ body.modal-open {
 .orb-2 {
     bottom: -160px;
     right: -120px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, transparent 60%);
+    background: transparent;
     animation-delay: 4s;
 }
 
@@ -232,15 +232,14 @@ body.modal-open {
     right: 15%;
     width: 360px;
     height: 360px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+    background: transparent;
     animation-delay: 8s;
 }
 
 .ambient-grid {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-image: none;
     background-size: 140px 140px;
     animation: gridDrift 30s linear infinite;
     opacity: 0.4;
@@ -274,7 +273,7 @@ body.modal-open {
     position: fixed;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    background: transparent;
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
@@ -556,7 +555,7 @@ body:hover .cursor-glow {
     left: 50%;
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    background: transparent;
     transform: translate(-50%, -50%);
     pointer-events: none;
     animation: heroPulse 4s ease-in-out infinite;
@@ -727,7 +726,7 @@ body:hover .cursor-glow {
 .hero-panel {
     width: 100%;
     max-width: 420px;
-    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.8));
+    background: rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 28px;
     padding: 32px;
@@ -1247,7 +1246,7 @@ body:hover .cursor-glow {
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+    background: #ffffff;
     border-radius: 2px;
 }
 

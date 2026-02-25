@@ -13,8 +13,27 @@
   --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.65);
   --shadow-focus: 0 30px 90px rgba(255, 255, 255, 0.12);
   --container-width: min(1200px, 90vw);
+  
+  /* Enhanced Animation System */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 260ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 420ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition-smooth: 320ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Hover Distances */
+  --hover-lift-small: 2px;
+  --hover-lift-medium: 8px;
+  --hover-lift-large: 16px;
+  --hover-scale-small: 1.02;
+  --hover-scale-medium: 1.05;
+  
+  /* Glow Intensities */
+  --glow-subtle: 0 0 20px rgba(255, 255, 255, 0.1);
+  --glow-medium: 0 0 30px rgba(255, 255, 255, 0.2);
+  --glow-strong: 0 0 40px rgba(255, 255, 255, 0.3);
+  --glow-text: 0 0 15px rgba(255, 255, 255, 0.5);
+  
   --font-display: "Space Grotesk", "Segoe UI", sans-serif;
   --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
@@ -853,8 +872,39 @@ footer {
   filter: blur(20px);
 }
 
+.cursor-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 60%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity var(--transition-base), transform 100ms ease-out;
+  z-index: 1;
+  filter: blur(30px);
+}
+
+.cursor-particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  z-index: 3;
+  filter: blur(1px);
+}
+
 body.cursor-active .cursor-spotlight {
   opacity: 0.9;
+}
+
+body.cursor-active .cursor-glow {
+  opacity: 0.6;
 }
 
 .fade-in {

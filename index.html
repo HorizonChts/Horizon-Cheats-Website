@@ -18,6 +18,8 @@
   </head>
   <body>
     <div class="cursor-spotlight" aria-hidden="true"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+    <div class="cursor-particle" aria-hidden="true"></div>
     <nav>
       <div class="nav-inner">
         <a class="logo" href="index.html">Chemical.lol</a>
@@ -205,44 +207,5 @@
     </footer>
 
     <script defer src="assets/js/main.js"></script>
-    <script>
-      let mouseX = 0, mouseY = 0;
-      let currentX = 0, currentY = 0;
-      
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
-      
-      function animateElements() {
-        const hoverElements = document.querySelectorAll('.logo, nav a, .nav-cta, .btn');
-        
-        hoverElements.forEach(el => {
-          const rect = el.getBoundingClientRect();
-          const centerX = rect.left + rect.width / 2;
-          const centerY = rect.top + rect.height / 2;
-          const distanceX = mouseX - centerX;
-          const distanceY = mouseY - centerY;
-          const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-          
-          if (distance < 150) {
-            const factor = 1 - (distance / 150);
-            const moveX = distanceX * factor * 0.15;
-            const moveY = distanceY * factor * 0.15;
-            const scale = 1 + factor * 0.05;
-            
-            el.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
-            el.style.boxShadow = `${moveX * 0.3}px ${moveY * 0.3}px 25px rgba(255, 255, 255, ${0.2 * factor})`;
-          } else {
-            el.style.transform = '';
-            el.style.boxShadow = '';
-          }
-        });
-        
-        requestAnimationFrame(animateElements);
-      }
-      
-      animateElements();
-    </script>
   </body>
 </html>

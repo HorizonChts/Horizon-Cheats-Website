@@ -211,5 +211,23 @@
     </footer>
 
     <script defer src="assets/js/main.js"></script>
+    <script>
+      document.addEventListener('mousemove', (e) => {
+        const hoverElements = document.querySelectorAll('.logo, nav a, .nav-cta, .btn');
+        hoverElements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          
+          if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+            el.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.05)`;
+            el.style.boxShadow = `${x * 0.2}px ${y * 0.2}px 20px rgba(255, 255, 255, 0.3)`;
+          } else {
+            el.style.transform = '';
+            el.style.boxShadow = '';
+          }
+        });
+      });
+    </script>
   </body>
 </html>

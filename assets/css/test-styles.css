@@ -712,40 +712,39 @@ nav a.active {
 }
 
 .support-section {
-background: rgba(255, 255, 255, 0.06);
-border-radius: 32px;
-padding: 64px;
-text-align: center;
-border: 1px solid rgba(255, 255, 255, 0.12);
-transition: all var(--transition-smooth);
-position: relative;
-overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 32px;
+  padding: 64px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
 }
 
 .support-section::before {
-content: "";
-position: absolute;
-inset: 0;
-background: linear-gradient(var(--mouse-angle, 0deg), rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-opacity: 0;
-transition: opacity var(--transition-smooth);
-pointer-events: none;
-border-radius: 32px;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--mouse-angle, 0deg), rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+  pointer-events: none;
+  border-radius: 32px;
 }
 
 .support-section:hover::before {
-opacity: 1;
+  opacity: 1;
 }
 
 .support-section:hover {
-transform: translateX(var(--mouse-x, 0px)) translateY(var(--mouse-y, 0px));
-background: rgba(255, 255, 255, 0.08);
-box-shadow: var(--glow-subtle);
+  transform: translateX(var(--mouse-x, 0px)) translateY(var(--mouse-y, 0px));
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--glow-subtle);
 }
 
 .support-section h3 {
-font-size: 2rem;
-margin-bottom: 16px;
+  font-size: 2rem;
   margin-bottom: 16px;
 }
 

@@ -271,9 +271,9 @@ body.modal-open {
    =================================== */
 .cursor-glow {
     position: fixed;
-    width: 400px;
-    height: 400px;
-    background: transparent;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
@@ -281,6 +281,7 @@ body.modal-open {
     transition: opacity 0.3s ease;
     mix-blend-mode: screen;
     transform: translate(-50%, -50%);
+    will-change: transform;
 }
 
 body:hover .cursor-glow {
@@ -296,9 +297,9 @@ body:hover .cursor-glow {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(10, 10, 10, 0.8);
-    backdrop-filter: blur(12px);
+    background: rgba(10, 10, 10, 0.9);
     border-bottom: 1px solid var(--border-color);
+    contain: layout style;
 }
 
 .nav-container {
@@ -382,7 +383,7 @@ body:hover .cursor-glow {
     top: calc(100% + 12px);
     right: 0;
     min-width: 180px;
-    background: rgba(10, 10, 10, 0.95);
+    background: rgba(10, 10, 10, 0.98);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-md);
     padding: 12px;
@@ -558,7 +559,6 @@ body:hover .cursor-glow {
     background: transparent;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    animation: heroPulse 4s ease-in-out infinite;
 }
 
 @keyframes heroPulse {
@@ -591,7 +591,13 @@ body:hover .cursor-glow {
     font-size: 0.875rem;
     font-weight: 600;
     color: #ffffff;
-    animation: badgePulse 2s ease-in-out infinite;
+    animation: badgePulse 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .status-badge {
+        animation: none;
+    }
 }
 
 .status-dot {
@@ -604,6 +610,12 @@ body:hover .cursor-glow {
 @keyframes badgePulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.2); }
     50% { box-shadow: 0 0 0 6px rgba(255, 255, 255, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .status-badge {
+        animation: none;
+    }
 }
 
 .version-badge {
@@ -640,7 +652,13 @@ body:hover .cursor-glow {
     background-clip: text;
     display: inline-block;
     background-size: 200% 200%;
-    animation: heroTextGlow 7s ease-in-out infinite;
+    animation: heroTextGlow 10s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gradient-text {
+        animation: none;
+    }
 }
 
 @keyframes heroTextGlow {
@@ -655,6 +673,12 @@ body:hover .cursor-glow {
     100% {
         background-position: 0% 50%;
         filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gradient-text {
+        animation: none;
     }
 }
 
@@ -731,8 +755,14 @@ body:hover .cursor-glow {
     border-radius: 28px;
     padding: 32px;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(18px);
-    animation: panelFloat 6s ease-in-out infinite;
+    contain: layout style paint;
+    animation: panelFloat 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-panel {
+        animation: none;
+    }
 }
 
 @keyframes panelFloat {
@@ -848,7 +878,6 @@ body:hover .cursor-glow {
     gap: 10px;
     cursor: pointer;
     transition: border-color 0.3s ease, color 0.3s ease;
-    backdrop-filter: blur(6px);
 }
 
 .hero-scroll-indicator:hover {
@@ -927,13 +956,13 @@ body:hover .cursor-glow {
 
 .feature-card {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 32px;
     transform: translateY(0) scale(1);
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
     cursor: pointer;
+    contain: layout style;
 }
 
 .feature-card:hover,
@@ -990,12 +1019,12 @@ body:hover .cursor-glow {
     max-width: 500px;
     margin: 0 auto;
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 48px;
     text-align: center;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    contain: layout style;
 }
 
 .coming-soon-card:hover {
@@ -1014,12 +1043,24 @@ body:hover .cursor-glow {
     justify-content: center;
     margin: 0 auto 24px;
     color: white;
-    animation: pulse 2s ease-in-out infinite;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .coming-soon-icon {
+        animation: none;
+    }
 }
 
 @keyframes pulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
     50% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .coming-soon-icon {
+        animation: none;
+    }
 }
 
 .coming-soon-card h3 {
@@ -1049,12 +1090,12 @@ body:hover .cursor-glow {
 
 .download-card {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 32px;
     text-align: center;
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    contain: layout style paint;
 }
 
 .download-card:hover {
@@ -1137,11 +1178,11 @@ body:hover .cursor-glow {
 
 .faq-item {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     overflow: hidden;
     transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    contain: layout style;
 }
 
 .faq-item:hover {
@@ -1278,8 +1319,8 @@ body:hover .cursor-glow {
     border-radius: var(--radius-lg);
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(10, 10, 10, 0.6);
-    backdrop-filter: blur(12px);
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+    contain: layout style;
 }
 
 .spotlight-card:hover {
@@ -1306,8 +1347,7 @@ body:hover .cursor-glow {
     align-items: center;
     justify-content: center;
     padding: 24px;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(14px);
+    background: rgba(0, 0, 0, 0.9);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.35s ease;
@@ -1396,12 +1436,12 @@ body:hover .cursor-glow {
 
 .changelog-content {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 24px;
     flex: 1;
     transition: border-color 0.3s ease;
+    contain: layout style;
 }
 
 .changelog-content:hover {
@@ -1460,7 +1500,6 @@ body:hover .cursor-glow {
 
 .discord-card {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 48px;
@@ -1469,6 +1508,7 @@ body:hover .cursor-glow {
     justify-content: space-between;
     gap: 40px;
     flex-wrap: wrap;
+    contain: layout style;
 }
 
 .discord-content {
@@ -1479,12 +1519,24 @@ body:hover .cursor-glow {
 
 .discord-icon {
     color: #ffffff;
-    animation: discordFloat 3s ease-in-out infinite;
+    animation: discordFloat 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .discord-icon {
+        animation: none;
+    }
 }
 
 @keyframes discordFloat {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .discord-icon {
+        animation: none;
+    }
 }
 
 .discord-text h2 {

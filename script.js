@@ -153,24 +153,25 @@ function initMobileMenu() {
     });
 }
 
-// Navbar Scroll Effect
+// Navbar Scroll Effect - simplified and throttled
 function initNavbarScroll() {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
 
-    let lastScroll = 0;
+    let ticking = false;
     
-    const handleScroll = rafThrottle(() => {
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-            navbar.style.background = 'rgba(15, 23, 42, 0.95)';
-        } else {
-            navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+    const handleScroll = () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const currentScroll = window.pageYOffset;
+                navbar.style.background = currentScroll > 50 
+                    ? 'rgba(10, 10, 10, 0.98)' 
+                    : 'rgba(10, 10, 10, 0.9)';
+                ticking = false;
+            });
+            ticking = true;
         }
-        
-        lastScroll = currentScroll;
-    });
+    };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 }
@@ -265,54 +266,127 @@ function initFeatureModal() {
     });
 }
 
-// Reveal Animations
+// Reveal Animations - optimized with fewer elements and simpler transitions
 function initRevealAnimations() {
-    const revealElements = document.querySelectorAll('.feature-card, .download-card, .faq-item, .changelog-item');
+    // Only animate cards, not all elements
+    const revealElements = document.querySelectorAll('.feature-card, .download-card');
     if (revealElements.length === 0) return;
 
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 100);
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
                 observer.unobserve(entry.target);
             }
         });
     }, {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '50px'
     });
 
     revealElements.forEach(el => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
         observer.observe(el);
     });
 }
 
-// Magnetic Button Effect
+// Optimized Cursor Glow - uses CSS transforms and throttled updates
+function initCursorGlow() {
+    const cursor = document.querySelector('.cursor-glow');
+    if (!cursor || window.matchMedia('(pointer: coarse)').matches) return;
+
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    let isActive = false;
+    let lastTime = 0;
+    const throttleMs = 16; // ~60fps
+
+    // Use CSS custom property for position instead of style.left/top
+    const updatePosition = (timestamp) => {
+        if (!isActive) return;
+        
+        if (timestamp - lastTime >= throttleMs) {
+            // Smooth interpolation
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            
+            // Use transform3d for GPU acceleration
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            
+            lastTime = timestamp;
+        }
+        
+        requestAnimationFrame(updatePosition);
+    };
+
+    let inactivityTimeout;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        if (!isActive) {
+            isActive = true;
+            requestAnimationFrame(updatePosition);
+        }
+        
+        clearTimeout(inactivityTimeout);
+        inactivityTimeout = setTimeout(() => {
+            isActive = false;
+        }, 100);
+    }, { passive: true });
+}
+
+// Optimized Magnetic Button Effect - uses throttling and CSS transforms
 function initMagneticButtons() {
     const buttons = document.querySelectorAll('.magnetic-btn');
     if (buttons.length === 0) return;
-
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
     buttons.forEach(button => {
-        const handleMove = rafThrottle((e) => {
-            const rect = button.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
+        let rafId = null;
+        let targetX = 0, targetY = 0;
+        let currentX = 0, currentY = 0;
+        
+        const animate = () => {
+            // Smooth interpolation
+            currentX += (targetX - currentX) * 0.15;
+            currentY += (targetY - currentY) * 0.15;
             
-            button.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-        });
+            // Stop animation when close enough
+            if (Math.abs(targetX - currentX) < 0.1 && Math.abs(targetY - currentY) < 0.1) {
+                currentX = targetX;
+                currentY = targetY;
+            }
+            
+            button.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+            
+            if (currentX !== 0 || currentY !== 0 || targetX !== 0 || targetY !== 0) {
+                rafId = requestAnimationFrame(animate);
+            } else {
+                rafId = null;
+            }
+        };
 
-        button.addEventListener('mousemove', handleMove);
+        button.addEventListener('mousemove', (e) => {
+            const rect = button.getBoundingClientRect();
+            targetX = (e.clientX - rect.left - rect.width / 2) * 0.2;
+            targetY = (e.clientY - rect.top - rect.height / 2) * 0.2;
+            
+            if (!rafId) {
+                rafId = requestAnimationFrame(animate);
+            }
+        }, { passive: true });
         
         button.addEventListener('mouseleave', () => {
-            button.style.transform = '';
+            targetX = 0;
+            targetY = 0;
+            if (!rafId) {
+                rafId = requestAnimationFrame(animate);
+            }
         });
     });
 }
@@ -334,31 +408,36 @@ function initSmoothScroll() {
     });
 }
 
-// Active Navigation Link
+// Active Navigation Link - optimized with passive scroll and reduced checks
 function initActiveNavLink() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
     
     if (sections.length === 0 || navLinks.length === 0) return;
 
-    const handleScroll = rafThrottle(() => {
-        const scrollY = window.pageYOffset;
-        
-        sections.forEach(section => {
-            const sectionHeight = section.offsetHeight;
-            const sectionTop = section.offsetTop - 100;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + sectionId) {
-                        link.classList.add('active');
+    let ticking = false;
+
+    const handleScroll = () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const scrollY = window.pageYOffset + 100;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === '#' + sectionId);
+                        });
                     }
                 });
-            }
-        });
-    });
+                ticking = false;
+            });
+            ticking = true;
+        }
+    };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 }

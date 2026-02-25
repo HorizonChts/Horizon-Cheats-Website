@@ -155,12 +155,12 @@ section {
     --bg-tertiary: #1a1a1a;
     --card-bg: rgba(255, 255, 255, 0.04);
     --accent-primary: #ffffff;
-    --accent-secondary: #a0a0a0;
-    --accent-gradient: linear-gradient(135deg, #ffffff 0%, #808080 100%);
+    --accent-secondary: #e0e0e0;
+    --accent-gradient: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
     --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.75);
-    --text-muted: rgba(255, 255, 255, 0.5);
-    --border-color: rgba(255, 255, 255, 0.18);
+    --text-secondary: rgba(255, 255, 255, 0.9);
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(255, 255, 255, 0.3);
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -1479,7 +1479,7 @@ body:hover .cursor-glow {
 }
 
 .discord-icon {
-    color: #a0a0a0;
+    color: #ffffff;
     animation: discordFloat 3s ease-in-out infinite;
 }
 
@@ -1510,7 +1510,7 @@ body:hover .cursor-glow {
     display: block;
     font-size: 1.5rem;
     font-weight: 800;
-    color: #a0a0a0;
+    color: #ffffff;
 }
 
 .discord-stat-label {

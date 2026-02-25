@@ -568,6 +568,68 @@ nav a.active {
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: left;
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.benefit-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--mouse-angle, 0deg), rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+  pointer-events: none;
+  border-radius: 20px;
+}
+
+.benefit-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.03), transparent 40%);
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+  pointer-events: none;
+  border-radius: 20px;
+}
+
+.benefit-card:hover::before,
+.benefit-card:hover::after {
+  opacity: 1;
+}
+
+.benefit-card:hover {
+  transform: translateX(var(--mouse-x, 0px)) translateY(var(--mouse-y, 0px));
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: var(--glow-subtle);
+}
+
+.benefit-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: color var(--transition-smooth);
+}
+
+.benefit-card:hover h3 {
+  color: #ffffff;
+  text-shadow: var(--glow-text);
+}
+
+.benefit-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  transition: color var(--transition-smooth);
+}
+
+.benefit-card:hover p {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .support-section {
@@ -576,12 +638,30 @@ nav a.active {
   padding: 64px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.support-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--mouse-angle, 0deg), rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+  pointer-events: none;
+  border-radius: 32px;
+}
+
+.support-section:hover::before {
+  opacity: 1;
 }
 
 .support-section:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+  transform: translateX(var(--mouse-x, 0px)) translateY(var(--mouse-y, 0px));
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--glow-subtle);
 }
 
 .support-section h3 {

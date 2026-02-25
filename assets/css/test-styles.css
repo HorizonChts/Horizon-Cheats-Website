@@ -651,63 +651,101 @@ nav a.active {
   transition: all var(--transition-smooth);
   position: relative;
   overflow: hidden;
-  transform-style: preserve-3d;
 }
 
 .benefit-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 50%);
+  background: linear-gradient(var(--mouse-angle, 0deg), rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
   opacity: 0;
-  transition: opacity var(--transition-base);
+  transition: opacity var(--transition-smooth);
   pointer-events: none;
+  border-radius: 20px;
 }
 
-.benefit-card:hover::before {
+.benefit-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.03), transparent 40%);
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+  pointer-events: none;
+  border-radius: 20px;
+}
+
+.benefit-card:hover::before,
+.benefit-card:hover::after {
   opacity: 1;
 }
 
 .benefit-card:hover {
-  transform: translateY(var(--hover-lift-small)) scale(var(--hover-scale-small));
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: var(--glow-medium);
+  transform: translateX(var(--mouse-x, 0px)) translateY(var(--mouse-y, 0px));
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: var(--glow-subtle);
+}
+
+.benefit-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: color var(--transition-smooth);
+}
+
+.benefit-card:hover h3 {
+  color: #ffffff;
+  text-shadow: var(--glow-text);
+}
+
+.benefit-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  transition: color var(--transition-smooth);
+}
+
+.benefit-card:hover p {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .support-section {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 32px;
-  padding: 64px;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
-  position: relative;
-  overflow: hidden;
-  transform-style: preserve-3d;
+background: rgba(255, 255, 255, 0.06);
+border-radius: 32px;
+padding: 64px;
+text-align: center;
+border: 1px solid rgba(255, 255, 255, 0.12);
+transition: all var(--transition-smooth);
+position: relative;
+overflow: hidden;
 }
 
 .support-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 60%);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  pointer-events: none;
+content: "";
+position: absolute;
+inset: 0;
+background: linear-gradient(var(--mouse-angle, 0deg), rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+opacity: 0;
+transition: opacity var(--transition-smooth);
+pointer-events: none;
+border-radius: 32px;
 }
 
 .support-section:hover::before {
-  opacity: 1;
+opacity: 1;
 }
 
 .support-section:hover {
-  transform: translateY(var(--hover-lift-medium)) scale(var(--hover-scale-small));
-  box-shadow: var(--glow-strong), 0 25px 70px rgba(0, 0, 0, 0.6);
+transform: translateX(var(--mouse-x, 0px)) translateY(var(--mouse-y, 0px));
+background: rgba(255, 255, 255, 0.08);
+box-shadow: var(--glow-subtle);
 }
 
 .support-section h3 {
-  font-size: 2rem;
+font-size: 2rem;
+margin-bottom: 16px;
   margin-bottom: 16px;
 }
 

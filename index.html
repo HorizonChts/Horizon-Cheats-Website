@@ -15,19 +15,25 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/test-styles.css" />
+    <style>
+      .logo:hover { background: red !important; }
+      nav a:hover { background: blue !important; }
+      .nav-cta:hover { background: green !important; }
+      .btn:hover { background: yellow !important; }
+    </style>
   </head>
   <body>
     <div class="cursor-spotlight" aria-hidden="true"></div>
     <nav>
       <div class="nav-inner">
-        <a class="logo" href="index.html">Chemical.lol</a>
+        <a class="logo" href="index.html" onmouseover="this.style.background='red'" onmouseout="this.style.background=''">Chemical.lol</a>
         <ul>
-          <li><a class="active" href="index.html">Home</a></li>
+          <li><a class="active" href="index.html" onmouseover="this.style.background='blue'" onmouseout="this.style.background=''">Home</a></li>
           <li><a href="showcase.html">Showcase</a></li>
           <li><a href="install.html">Install</a></li>
           <li><a href="download.html">Download</a></li>
           <li>
-            <a class="nav-cta" href="https://discord.gg/chemical" target="_blank" rel="noreferrer">
+            <a class="nav-cta" href="https://discord.gg/chemical" target="_blank" rel="noreferrer" onmouseover="this.style.background='green'" onmouseout="this.style.background=''">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path
                   d="M20 4.5A18.64 18.64 0 0 0 15.65 3l-.2.42A13.15 13.15 0 0 1 12 3a13.37 13.37 0 0 1-3.52.45L8.29 3A18.64 18.64 0 0 0 4 4.5C1.47 8.3.58 12 1 15.65A18.3 18.3 0 0 0 8.13 21l1-1.37A11.82 11.82 0 0 1 6.9 18l.63-.49a12.55 12.55 0 0 0 8.94 0l.63.48a11.72 11.72 0 0 1-2.2 1.66l1 1.37A18.3 18.3 0 0 0 23 15.65C23.5 11.62 22.58 7.92 20 4.5ZM8.9 15.35A1.8 1.8 0 1 1 10.64 13a1.8 1.8 0 0 1-1.74 2.35Zm6.22 0A1.8 1.8 0 1 1 16.86 13a1.8 1.8 0 0 1-1.74 2.35Z"

@@ -374,7 +374,7 @@ async function initChangelogFeed() {
 
     changelogLoading = true;
 
-    const endpoint = 'https://raw.githubusercontent.com/HorizonChts/Horizon-Update-Logs/main/README.md';
+    const endpoint = 'https://raw.githubusercontent.com/ChemicalChts/Chemical-Update-Logs/main/README.md';
     statusEl.textContent = 'Fetching latest updates...';
 
     try {
